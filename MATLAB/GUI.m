@@ -23,7 +23,7 @@ function varargout = GUI(varargin)
 
 % Edit the above text to modify the response to help GUI
 
-% Last Modified by GUIDE v2.5 21-Apr-2015 14:47:37
+% Last Modified by GUIDE v2.5 21-Apr-2015 17:29:34
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -150,12 +150,18 @@ function figure1_KeyPressFcn(hObject, eventdata, handles) %Knoppen linken aan fu
 switch eventdata.Key
     case 'w'
         handles.speed = 160
+        drive(handles.speed, handles.dir)
     case 's'
         handles.speed = 140
+        drive(handles.speed, handles.dir)
     case 'd'
         handles.dir = 120
+        drive(handles.speed, handles.dir)
     case 'a'
         handles.dir = 180
+        drive(handles.speed, handles.dir)
+    case 'escape'
+        stop
 end
 %Update structure
 guidata(hObject, handles);
@@ -169,18 +175,36 @@ function figure1_KeyReleaseFcn(hObject, eventdata, handles)
 %	Character: character interpretation of the key(s) that was released
 %	Modifier: name(s) of the modifier key(s) (i.e., control, shift) released
 % handles    structure with handles and user data (see GUIDATA)
-handles.speed = 150;
-handles.dir = 150;
+
+switch eventdata.Key
+    case 'w'
+        disp('Key is released')
+        stop
+    case 's'
+        disp('Key is released')
+        stop
+    case 'd'
+        disp('Key is released')
+        stop
+    case 'a'
+        disp('Key is released')
+        stop
+end
+
 %Update structure
 guidata(hObject, handles);
-disp('Key is released')
-drive(handles.speed, handles.dir)
 
 % --- Executes on button press in Stop.
 function Stop_Callback(hObject, eventdata, handles)
 % hObject    handle to Stop (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-speed = 150
-dir = 150
-drive(speed, dir)
+stop
+
+
+% --- Executes on button press in pushbutton7.
+function pushbutton7_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton7 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+run ('Open_com.m');
