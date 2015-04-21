@@ -1,3 +1,4 @@
+
 function varargout = GUI(varargin)
 % GUI MATLAB code for GUI.fig
 %      GUI, by itself, creates a new GUI or raises the existing
@@ -22,7 +23,7 @@ function varargout = GUI(varargin)
 
 % Edit the above text to modify the response to help GUI
 
-% Last Modified by GUIDE v2.5 21-Apr-2015 11:20:54
+% Last Modified by GUIDE v2.5 21-Apr-2015 14:47:37
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -54,9 +55,18 @@ function GUI_OpeningFcn(hObject, eventdata, handles, varargin)
 
 % Choose default command line output for GUI
 handles.output = hObject;
+handles.speed = 150;
+handles.dir = 150;
 
 % Update handles structure
 guidata(hObject, handles);
+
+%Maak verbinding met de auto
+%comport = '\\.\COM7' %Com poort verschilt Bluetooth Module: 3215
+%EPOCommunications('close');
+%result = EPOCommunications('open', comport);
+%status = EPOCommunications('transmit', 'S');
+%EPOCommunications('transmit','A1') %GELUID UIT
 
 % UIWAIT makes GUI wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
@@ -80,29 +90,97 @@ function panic_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 
-% --- Executes on button press in drivecontrols.
-function drivecontrols_Callback(hObject, eventdata, handles)
-% hObject    handle to drivecontrols (see GCBO)
+% --- Executes on button press in w.
+function w_Callback(hObject, eventdata, handles)
+% hObject    handle to w (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+speed = 160
+dir = 150
+drive(speed, dir)
+
+
+
+% --- Executes on button press in a.
+function a_Callback(hObject, eventdata, handles)
+% hObject    handle to a (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+speed = 160
+dir = 200
+drive(speed, dir)
+
+
+% --- Executes on button press in s.
+function s_Callback(hObject, eventdata, handles)
+% hObject    handle to s (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+speed = 140
+dir = 150
+drive(speed, dir)
+
+% --- Executes on button press in d.
+function d_Callback(hObject, eventdata, handles)
+% hObject    handle to d (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+speed = 160
+dir = 200
+drive(speed, dir)
+
+% --- Executes on key press with focus on panic and none of its controls.
+function panic_KeyPressFcn(hObject, eventdata, handles)
+% hObject    handle to panic (see GCBO)
+% eventdata  structure with the following fields (see UICONTROL)
+%	Key: name of the key that was pressed, in lower case
+%	Character: character interpretation of the key(s) that was pressed
+%	Modifier: name(s) of the modifier key(s) (i.e., control, shift) pressed
 % handles    structure with handles and user data (see GUIDATA)
 
 
-% --- Executes on button press in pushbutton3.
-function pushbutton3_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton3 (see GCBO)
+% --- Executes on key press with focus on figure1 and none of its controls.
+function figure1_KeyPressFcn(hObject, eventdata, handles) %Knoppen linken aan functies
+% hObject    handle to figure1 (see GCBO)
+% eventdata  structure with the following fields (see FIGURE)
+%	Key: name of the key that was pressed, in lower case
+%	Character: character interpretation of the key(s) that was pressed
+%	Modifier: name(s) of the modifier key(s) (i.e., control, shift) pressed
+% handles    structure with handles and user data (see GUIDATA)
+switch eventdata.Key
+    case 'w'
+        handles.speed = 160
+    case 's'
+        handles.speed = 140
+    case 'd'
+        handles.dir = 120
+    case 'a'
+        handles.dir = 180
+end
+%Update structure
+guidata(hObject, handles);
+drive(handles.speed, handles.dir)
+
+% --- Executes on key release with focus on figure1 and none of its controls.
+function figure1_KeyReleaseFcn(hObject, eventdata, handles)
+% hObject    handle to figure1 (see GCBO)
+% eventdata  structure with the following fields (see FIGURE)
+%	Key: name of the key that was released, in lower case
+%	Character: character interpretation of the key(s) that was released
+%	Modifier: name(s) of the modifier key(s) (i.e., control, shift) released
+% handles    structure with handles and user data (see GUIDATA)
+handles.speed = 150;
+handles.dir = 150;
+%Update structure
+guidata(hObject, handles);
+disp('Key is released')
+drive(handles.speed, handles.dir)
+
+% --- Executes on button press in Stop.
+function Stop_Callback(hObject, eventdata, handles)
+% hObject    handle to Stop (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
-
-% --- Executes on button press in pushbutton4.
-function pushbutton4_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton4 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-
-% --- Executes on button press in pushbutton5.
-function pushbutton5_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton5 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+speed = 150
+dir = 150
+drive(speed, dir)
