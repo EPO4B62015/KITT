@@ -162,7 +162,7 @@ switch eventdata.Key
         handles.dir = 180
         drive(handles.speed, handles.dir)
     case 'escape'
-        stop
+        stop_car
 end
 %Update structure
 guidata(hObject, handles);
