@@ -88,6 +88,7 @@ function panic_Callback(hObject, eventdata, handles)
 % hObject    handle to panic (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+stop_car
 
 
 % --- Executes on button press in w.
@@ -179,16 +180,16 @@ function figure1_KeyReleaseFcn(hObject, eventdata, handles)
 switch eventdata.Key
     case 'w'
         disp('Key is released')
-        stop
+        stop_car
     case 's'
         disp('Key is released')
-        stop
+        stop_car
     case 'd'
         disp('Key is released')
-        stop
+       stop_car
     case 'a'
         disp('Key is released')
-        stop
+        stop_car
 end
 
 %Update structure
@@ -199,7 +200,7 @@ function Stop_Callback(hObject, eventdata, handles)
 % hObject    handle to Stop (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-stop
+stop_car
 
 
 % --- Executes on button press in pushbutton7.

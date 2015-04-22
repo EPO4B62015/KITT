@@ -1,4 +1,4 @@
-function status = stop
+function status = stop_car
 d = int2str(150);
 s = int2str(150);
 signal = ['D',d,' ',s];
