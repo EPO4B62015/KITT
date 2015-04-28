@@ -1,0 +1,26 @@
+clear all;
+load ('data_acc_final.mat') %inladen data meting acceleratie
+
+i=2;
+while(i<size(data_t_a,1))
+if(data_t_a(i,4)==999 && data_t_a(i,3) == 999)
+data_t_a = [data_t_a(1:n-1,1:end); data_t_a(n+1:end,1:end)];
+elseif(data_t_a(i,4)==999)
+    data_t_a(i,4)=data_t_a(i,3);
+elseif(data_t_a(i,3)==999)
+    data_t_a(i,3)=data_t_a(i,4);   
+end
+i=i+1;
+end
+
+Afstand_links_a = abs(data_t_a(2:end,3)-data_t_a(2,4));
+Afstand_rechts_a = abs(data_t_a(2:end,4)-data_t_a(2,3));
+    
+Afstand = (Afstand_links_a + Afstand_rechts_a)/20;%Afstand in meters
+
+Time_a = data_t_a(2:end,7);
+
+V = diff(Afstand)./diff(Time_a);
+
+
+
