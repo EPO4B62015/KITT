@@ -170,11 +170,7 @@ switch eventdata.Key
         drive(handles.speed, handles.dir)
         handles.busys = 1;
         else
-        a = exist('statusd')
-        if (a == 0)
-            statusd = [0 0 0 0 0 0]
-        end
-        statusd = data(statusd);
+
         end
     case 'd'
         if (handles.busyd == 0)
@@ -182,7 +178,11 @@ switch eventdata.Key
         drive(handles.speed, handles.dir)
         handles.busyd = 1;
         else
-            
+        a = exist('statusd')
+        if (a == 0)
+            statusd = [0 0 0 0 0 0]
+        end
+        statusd = data(statusd);    
         end
     case 'a'
         if (handles.busya == 0)
