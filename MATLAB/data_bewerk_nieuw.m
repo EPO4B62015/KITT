@@ -41,23 +41,23 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%% DISTANCES, TIMES and VELOCITIES %%%%%
-Afstand_links_a     = abs(data_t_a(2:end,3)-data_t_a(2,4)); %afstand van 0 laten lopen
-Afstand_rechts_a    = abs(data_t_a(2:end,4)-data_t_a(2,3));
+Afstand_links_a     = abs(data_t_a(1:end,3)-data_t_a(1,3)); %afstand van 0 laten lopen
+Afstand_rechts_a    = abs(data_t_a(1:end,4)-data_t_a(1,4));
     
 Afstand = (Afstand_rechts_a /100); %Afstand in meters
-Time_a  = data_t_a(2:end,7); %tijd vanaf zelfde moment metingen
+Time_a  = data_t_a(1:end,7); %tijd vanaf zelfde moment metingen
 V       = diff(Afstand)./diff(Time_a);
 V = [0;V]; % begin with zero and append last value
 Afstand(end) = 20;
 
 
 Time_a  = [0;Time_a];
-data_t_d            = data_t_d(7:end,1:end);
-distance_left_d     = abs(data_t_d(2:end,3)-data_t_d(2,4));
-distance_right_d    = abs(data_t_d(2:end,4)-data_t_d(2,3));
+data_t_d            = data_t_d(1:end,1:end);
+distance_left_d     = abs(data_t_d(1:end,3)-data_t_d(1,3));
+distance_right_d    = abs(data_t_d(1:end,4)-data_t_d(1,4));
 
 distance_d  = (distance_right_d / 100);         % Distance in meters
-time_d      = data_t_d(2:end,7);
+time_d      = data_t_d(1:end,7);
 velocity_d  = diff(distance_d)./diff(time_d);   % Derivative
 velocity_d  = [velocity_d];
 time_d      = [0;time_d];
