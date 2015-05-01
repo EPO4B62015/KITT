@@ -1,7 +1,9 @@
 %%%% CLEAR AND LOAD MEASUREMENTS %%%%%
 clear all;
-load ('data_f_2.mat');
+load ('data_f_test.mat');
 
+data_t_a = data_a_165;
+data_t_d = data_d_135;
 %%%% REMOVE INCORRECT AND/OR NOT NEEDED MEASUREMENTS %%%%%
 i=2;j=2;k=2;
 while(i<size(data_t_a,1)) % incorrecte metingen weggooien
@@ -76,7 +78,7 @@ ylabel('Velocity in meters per second (m/s)');
 %%%%% CALCULATE INTERSECTION %%%%%
 d_v0 = interp1(velocity_d,distance_d,0); % distance at which deceleration reaches 0 velocity
 t_v0 = interp1(velocity_d,time_d(2:end-1),0);
-[i_d,i_v] = polyxpoly(Afstand,V,distance_d(1:end-1),velocity_d); % intersection
+[i_d,i_v1] = polyxpoly(Afstand,V,distance_d(1:end-1),velocity_d); % intersection
 [i_t, i_v] = polyxpoly(Time_a(2:end),V,time_d(2:end-1),velocity_d);
 stopping_distance = d_v0 - i_d; % Stopping distance
 
