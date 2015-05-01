@@ -36,36 +36,40 @@ while(j<size(data_t_d,1))
 j=j+1;
 end
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%% DISTANCES, TIMES and VELOCITIES %%%%%
-Afstand_links_a     = abs(data_t_a(2:end,3)-data_t_a(2,4));%afstand van 0 laten lopen
+Afstand_links_a     = abs(data_t_a(2:end,3)-data_t_a(2,4)); %afstand van 0 laten lopen
 Afstand_rechts_a    = abs(data_t_a(2:end,4)-data_t_a(2,3));
     
 Afstand = (Afstand_rechts_a /100);%Afstand in meters
+Time_a  = data_t_a(2:end,7); %tijd vanaf zelfde moment metingen
+V       = diff(Afstand)./diff(Time_a);
+V       = [0;V];%afgeleide
+Time_a  = [0;Time_a];
 
-Time_a = data_t_a(2:end,7); %tijd vanaf zelfde moment metingen
+data_t_d            = data_t_d(7:end,1:end);
+distance_left_d     = abs(data_t_d(2:end,3)-data_t_d(2,4));
+distance_right_d    = abs(data_t_d(2:end,4)-data_t_d(2,3));
 
-V = diff(Afstand)./diff(Time_a);
-V = [0;V];%afgeleide
-Time_a = [0;Time_a];
-
-data_t_d = data_t_d(7:end,1:end);
-distance_left_d = abs(data_t_d(2:end,3)-data_t_d(2,4));
-distance_right_d = abs(data_t_d(2:end,4)-data_t_d(2,3));
-
-distance_d = (distance_right_d / 100); % Distance in meters
-time_d = data_t_d(2:end,7);
-velocity_d = diff(distance_d)./diff(time_d); % Derivative
-velocity_d = [velocity_d];
-time_d = [0;time_d];
+distance_d  = (distance_right_d / 100);         % Distance in meters
+time_d      = data_t_d(2:end,7);
+velocity_d  = diff(distance_d)./diff(time_d);   % Derivative
+velocity_d  = [velocity_d];
+time_d      = [0;time_d];
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%% FIGURES %%%%%
 figure
 hold on
+max_v = max(max(velocity_d), max(V));
+ylim([0 max_v+0.5]);
 plot(Afstand,V);
 plot(distance_d(1:end-1),velocity_d);
 legend('Acceleration','Deceleration');
 xlabel('Distance in meters (m)');
 ylabel('Velocity in meters per second (m/s)');
+
+%%%%% CALCULATE INTERSECTION %%%%%
+
+[i_d,i_v] = polyxpoly(Afstand,V,distance_d(1:end-1),velocity_d);
