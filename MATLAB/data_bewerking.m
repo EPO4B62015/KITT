@@ -46,7 +46,7 @@ Afstand = (Afstand_rechts_a /100); %Afstand in meters
 Time_a  = data_t_a(2:end,7); %tijd vanaf zelfde moment metingen
 V       = diff(Afstand)./diff(Time_a);
 V = [0;V]; % begin with zero and append last value
-Afstand(end) = 3;
+Afstand(end) = 20;
 
 
 Time_a  = [0;Time_a];
