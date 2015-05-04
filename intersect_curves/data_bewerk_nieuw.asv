@@ -70,8 +70,8 @@ load('test_data.mat')
 dist = linspace(0,6,1000);
 V_fitted = a_fit(dist);
 velocity_d_fitted = d_fit(dist);
-pos = find(velocity_d_fitted < 0);
-velocity_d_fitted(pos(1):end) = 0;
+pos = find(velocity_d_fitted < 0)
+velocity_d_fitted 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%% FIGURES %%%%%
