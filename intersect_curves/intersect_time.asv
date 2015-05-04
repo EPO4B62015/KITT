@@ -57,7 +57,7 @@ end
 [i_d,i_v1] = polyxpoly(dist,V_fitted,dist,velocity_d_fitted);
 pos_ip_150 = find(dist_time >= i_d);
 time_to_brake = time(pos_ip_150(1));
-brake_time_150 =  dist_time_d(d_150-i_d);
+brake_time_150 = abs(1.6dist_time_d(d_150-i_d);
 time_ip_150 = [time_to_brake; brake_time_150];
 
 while(1)
