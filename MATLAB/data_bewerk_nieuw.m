@@ -3,7 +3,7 @@ clear all;
 load ('data_f_test.mat');
 
 data_t_a = data_a_165;
-data_t_d = data_d_135;
+data_t_d = data_d_150_3;
 %%%% REMOVE INCORRECT AND/OR NOT NEEDED MEASUREMENTS %%%%%
 i=2;j=2;k=2;
 while(i<size(data_t_a,1)) % incorrecte metingen weggooien
