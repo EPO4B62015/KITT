@@ -2,7 +2,7 @@
 %clear all;
 load ('data_f_test.mat');
 
-lookup_distance = 4;
+lookup_distance = 3.5;
 
 data_t_a = data_a_165;
 data_t_d = data_d_150_2;
@@ -65,7 +65,9 @@ distance_d  = (distance_right_d / 100);         % Distance in meters
 time_d      = data_t_d(1:end,7);
 velocity_d  = diff(distance_d)./diff(time_d);   % Derivative
 velocity_d  = [velocity_d];
-time_d      = [0;time_d];
+time_d      = time_d(1:end) - time_d(1);
+distance_d_curve = distance_d(1:14);
+time_d_curve = time_d(1:14);
 
 distance_right_d_fast    = abs(data_t_d_fast(4:end,4)-data_t_d_fast(4,4));
     
@@ -73,6 +75,7 @@ distance_d_fast = (distance_right_d_fast /100); %Afstand in meters
 time_d_fast  = data_t_d_fast(4:end,7); %tijd vanaf zelfde moment metingen
 velocity_d_fast       = diff(distance_d_fast)./diff(time_d_fast);
 velocity_d_fast = [2.45; velocity_d_fast];
+time_d_fast = time_d_fast(1:end) - time_d_fast(1);
 
 
 load('test_data.mat')
@@ -80,6 +83,8 @@ load('test_data.mat')
 [a_fit, gofa] = accfit_made_long(testafstand, V_test);
 [d_fit, gofd] = decfit(distance_d(1:end-1), velocity_d);
 [dist_time, goft] = dist_time_acc(testtime,testafstand);
+[dist_time_d, goftd] = dist_time_dec(distance_d_curve, time_d_curve);
+[dist_time_d_fast, goftdf] = dist_time_dec_fast(distance_d_fast, time_d_fast);
 
 time = linspace(0,4,1000);
 dist = linspace(0,6,1000);
