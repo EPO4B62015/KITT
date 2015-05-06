@@ -22,7 +22,7 @@ function varargout = Car_control(varargin)
 
 % Edit the above text to modify the response to help Car_control
 
-% Last Modified by GUIDE v2.5 06-May-2015 12:34:59
+% Last Modified by GUIDE v2.5 06-May-2015 16:52:26
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -158,7 +158,17 @@ function goButton_Callback(hObject, eventdata, handles)
 parent = get(hObject, 'Parent')
 distaceToTravel = findobj(parent, 'Tag', 'distanceToTravel');
 disp(distaceToTravel.String);
-%[t1, t2] = intersect_time(distaceToTravel.String);
+%[t1, t2] = intersect_time(distaceToTravel.String); %Voor de gewenste
+%afstand de acceleratie en deceleratie tijden uitreken
 t2 = [1;2];
 timer = timer_functies(t2(1), t2(2));
 start(timer)
+
+% --- Executes on button press in Start_challengeB.
+function Start_challengeB_Callback(hObject, eventdata, handles)
+% hObject    handle to Start_challengeB (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+parent = get(hObject, 'Parent')
+distance_b = findobj(parent, 'Tag', 'distance_b');
+disp(distance_b.String);

@@ -1,5 +1,5 @@
 function [ time_ip_150, time_ip_135 ] = intersect_time(lookup_distance)
-load ('data_f_test.mat');
+%load ('data_f_test.mat');
 data_t_a = data_a_165;
 data_t_d = data_d_150_2;
 data_t_d_fast = data_d_135;
