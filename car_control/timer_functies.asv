@@ -1,0 +1,31 @@
+function t = timer_functies(t_a, t_d)
+t = timer;
+t.TimerFcn = @timer_timerFcn;
+t.StartFcn = @(~,~)timer_startFcn;
+t.StopFcn = @(~,~)timer_stopFcn;
+t.StartDelay = t_a;
+t.Period = t_d;
+t.TasksToExecute = 2;
+t.ExecutionMode = 'fixedRate';
+
+function timer_startFcn
+disp('Start');
+tic
+
+
+function timer_timerFcn(timerObj, timerEvent)
+global time
+if(timerObj.TasksExecuted == 1)
+    disp('Eerste keer');
+    %drive rem
+    time(1) = toc
+elseif(timerObj.TasksExecuted == 2)
+    disp('Tweede keer');
+    disp(timerEvent.Data);
+    time(2) = toc
+else
+    disp('Error');
+end
+
+function timer_stopFcn
+disp('Timer is gestopt');
