@@ -1,4 +1,4 @@
-function t = timer_functies(t_a, t_d) %Timer functie met een acceleratie tijd en een remtijd
+function t = timer_functies(t_a, t_d) %Timer functie met een acceleratie tijd en een remtijd%
 global time
 
 t = timer;
