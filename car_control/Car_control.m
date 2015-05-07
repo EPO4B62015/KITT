@@ -22,7 +22,7 @@ function varargout = Car_control(varargin)
 
 % Edit the above text to modify the response to help Car_control
 
-% Last Modified by GUIDE v2.5 06-May-2015 16:52:26
+% Last Modified by GUIDE v2.5 07-May-2015 22:30:59
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -172,3 +172,12 @@ function Start_challengeB_Callback(hObject, eventdata, handles)
 parent = get(hObject, 'Parent')
 distance_b = findobj(parent, 'Tag', 'distance_b');
 disp(distance_b.String);
+
+function edit3_Callback(hObject, eventdata, handles)
+% hObject    handle to edit3 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit3 as text
+%        str2double(get(hObject,'String')) returns contents of edit3 as a double
+
