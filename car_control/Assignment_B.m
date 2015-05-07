@@ -2,15 +2,17 @@
 %2 loops: 1 met snelheid on the flow, de ander met constante snelheid
 %deceleratie curves
 
-succesen = 0;
-linker_afstand1 = 999
-rechter_afstand1 = 999
-linker_afstand2 = 999
-rechter_afstand2 = 999
 %Snelheid bepalen aan de hand van 2 metingen
 
     while(1)
         %De afstand blijven bepalen zolang er geen enkele waarde gevonden is
+        linker_afstand1 = 999
+        rechter_afstand1 = 999
+        linker_afstand2 = 999
+        rechter_afstand2 = 999
+        
+        %Eventueel nog filteren op rare waardes, je verwacht dat de
+        %sensoren rond 3 meter iets gaan detecteren.
         while(linker_afstand1 == 999 && rechter_afstand1 == 999)
         t_eerste_meetpunt = tic %Kan dit? is niet echt van belang
         status = EPOCommunications('transmit', 'S');
@@ -31,9 +33,13 @@ rechter_afstand2 = 999
         if(linker_afstand2 ~= 999 || rechter_afstand2 ~= 999)
             %Afhankelijk van welke sensoren een juiste afstand hebben de
             %snelheid bepalen
-             break;
+            
+            if (linker_afstand1 ~= 999 && rechter_afstand1 ~= 999 && linker_afstand2 ~= 999 && rechter_afstand2 ~= 999 ) 
+                v = (((linker_afstand1 + rechter_afstand1)/2) -  ((linker_afstand2 +_rechter_afstand2)/2))/t_tweede_meetpunt
+            %Handige manier bedenken om die snelheid te bepalen. 
+            
+            break; %While loop afsluiten.
         end
-
     end
 
 %Gevonden snelheid doorgeven aan intersect curves.
