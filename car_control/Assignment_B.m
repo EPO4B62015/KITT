@@ -15,7 +15,7 @@
         %sensoren rond 3 meter iets gaan detecteren.
         while(linker_afstand1 == 999 && rechter_afstand1 == 999)
         t_eerste_meetpunt = tic %Kan dit? is niet echt van belang
-        status = EPOCommunications('transmit', 'S');
+        %status = EPOCommunications('transmit', 'S');
         
         linker_afstand1 = status%(....)
         rechter_afstand1 = status%(....) %Hoe uit status te lezen?

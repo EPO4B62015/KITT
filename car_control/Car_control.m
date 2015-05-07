@@ -22,7 +22,7 @@ function varargout = Car_control(varargin)
 
 % Edit the above text to modify the response to help Car_control
 
-% Last Modified by GUIDE v2.5 07-May-2015 22:45:48
+% Last Modified by GUIDE v2.5 07-May-2015 23:23:51
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -124,16 +124,6 @@ comport = strcat('\\.\' ,popupMenu.String(popupMenu.Value) );
 disp(comport);
 
 
-% --- Executes on button press in wasdToggle.
-function wasdToggle_Callback(hObject, eventdata, handles)
-% hObject    handle to wasdToggle (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hint: get(hObject,'Value') returns toggle state of wasdToggle
-
-
-
 function distanceToTravel_Callback(hObject, eventdata, handles)
 % hObject    handle to distanceToTravel (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -187,6 +177,7 @@ function wasdCheck_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 % Hint: get(hObject,'Value') returns toggle state of wasdCheck
+disp(hObject.Value);
 
 
 % --- Executes on key press with focus on figure1 and none of its controls.
@@ -198,6 +189,7 @@ function figure1_KeyPressFcn(hObject, eventdata, handles)
 %	Modifier: name(s) of the modifier key(s) (i.e., control, shift) pressed
 % handles    structure with handles and user data (see GUIDATA)
 check = findobj(hObject, 'Tag', 'wasdCheck');
+disp('Keypressed');
 if(check.Value > 0)
 switch eventdata.Key
     case 'w'
@@ -288,3 +280,16 @@ end
 end
 %Update structure
 guidata(hObject, handles);
+
+
+% --- Executes on button press in abortButton.
+function abortButton_Callback(hObject, eventdata, handles)
+% hObject    handle to abortButton (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global t
+t = timer_test(findobj(hObject.Parent, 'Tag', 'wasdCheck'));
+start(t);
+disp(hObject.Value);
+
+
