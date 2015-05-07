@@ -22,7 +22,7 @@ function varargout = Car_control(varargin)
 
 % Edit the above text to modify the response to help Car_control
 
-% Last Modified by GUIDE v2.5 07-May-2015 22:30:59
+% Last Modified by GUIDE v2.5 07-May-2015 22:45:48
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -63,6 +63,12 @@ handles.comPorts = serialInfo.AvailableSerialPorts;
 handles.comMenuValue = 1;
 
 %Init wasd
+handles.speed = 150;
+handles.dir = 150;
+handles.wPressed = 0;
+handles.aPressed = 0;
+handles.dPressed = 0;
+handles.sPressed = 0;
 
 %Init timer
 
@@ -169,7 +175,83 @@ function Start_challengeB_Callback(hObject, eventdata, handles)
 % hObject    handle to Start_challengeB (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-parent = get(hObject, 'Parent')
-distance_b = findobj(parent, 'Tag', 'distance_b');
+parent = get(hObject, 'Parent');
+distance_b = findobj(parent, 'Tag', 'distanceToStop');
 disp(distance_b.String);
 
+
+% --- Executes on button press in wasdCheck.
+function wasdCheck_Callback(hObject, eventdata, handles)
+% hObject    handle to wasdCheck (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of wasdCheck
+
+
+% --- Executes on key press with focus on figure1 and none of its controls.
+function figure1_KeyPressFcn(hObject, eventdata, handles)
+% hObject    handle to figure1 (see GCBO)
+% eventdata  structure with the following fields (see MATLAB.UI.FIGURE)
+%	Key: name of the key that was pressed, in lower case
+%	Character: character interpretation of the key(s) that was pressed
+%	Modifier: name(s) of the modifier key(s) (i.e., control, shift) pressed
+% handles    structure with handles and user data (see GUIDATA)
+switch eventdata.Key
+    case 'w'
+        if (handles.wPressed == 0)
+        handles.speed = 160;
+        drive(handles.speed, handles.dir)
+        handles.wPressed = 1;
+        else
+        a = exist('statusd')
+        if (a == 0)
+            statusd = [0 0 0 0 0 0]
+        end
+        statusd = data(statusd);
+        end
+    case 's'
+        if (handles.sPressed == 0)
+        handles.speed = 140;
+        drive(handles.speed, handles.dir)
+        handles.sPressed = 1;
+        else
+        a = exist('statusd')
+        if (a == 0)
+            statusd = [0 0 0 0 0 0]
+        end
+        statusd = data(statusd);
+        end
+    case 'd'
+        if (handles.dPressed == 0)
+        handles.dir = 120;
+        drive(handles.speed, handles.dir)
+        handles.dPressed = 1;
+        else
+            
+        end
+    case 'a'
+        if (handles.aPressed == 0)
+        handles.dir = 180;
+        drive(handles.speed, handles.dir)     
+        handles.aPressed = 1;
+        else
+            
+        end
+    case 'escape'
+        stop_car
+    case 'space'
+        stop_car
+end
+%Update structure
+guidata(hObject, handles);
+
+
+% --- Executes on key release with focus on figure1 and none of its controls.
+function figure1_KeyReleaseFcn(hObject, eventdata, handles)
+% hObject    handle to figure1 (see GCBO)
+% eventdata  structure with the following fields (see MATLAB.UI.FIGURE)
+%	Key: name of the key that was released, in lower case
+%	Character: character interpretation of the key(s) that was released
+%	Modifier: name(s) of the modifier key(s) (i.e., control, shift) released
+% handles    structure with handles and user data (see GUIDATA)
