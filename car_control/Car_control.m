@@ -197,6 +197,8 @@ function figure1_KeyPressFcn(hObject, eventdata, handles)
 %	Character: character interpretation of the key(s) that was pressed
 %	Modifier: name(s) of the modifier key(s) (i.e., control, shift) pressed
 % handles    structure with handles and user data (see GUIDATA)
+check = findobj(hObject, 'Tag', 'wasdCheck');
+if(check.Value > 0)
 switch eventdata.Key
     case 'w'
         if (handles.wPressed == 0)
@@ -243,6 +245,7 @@ switch eventdata.Key
     case 'space'
         stop_car
 end
+end
 %Update structure
 guidata(hObject, handles);
 
@@ -255,3 +258,33 @@ function figure1_KeyReleaseFcn(hObject, eventdata, handles)
 %	Character: character interpretation of the key(s) that was released
 %	Modifier: name(s) of the modifier key(s) (i.e., control, shift) released
 % handles    structure with handles and user data (see GUIDATA)
+check = findobj(hObject, 'Tag', 'wasdCheck');
+if(check.Value > 0)
+switch eventdata.Key
+    case 'w'
+        disp('Key is released')
+        drive(140, handles.dir);
+        drive(150, handles.dir);
+        handles.speed = 150;
+        handles.wPressed = 0;
+
+    case 's'
+        disp('Key is released')
+        drive(160, handles.dir);
+        drive(150, handles.dir);
+        handles.speed = 150;
+        handles.sPressed = 0;
+    case 'd'
+        disp('Key is released')
+       handles.dir = 150;
+       handles.dPressed = 0;
+       drive(handles.speed, handles.dir)
+    case 'a'
+        disp('Key is released')
+        handles.dir = 150;
+        handles.aPressed = 0;
+        drive(handles.speed, handles.dir)
+end
+end
+%Update structure
+guidata(hObject, handles);

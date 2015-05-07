@@ -63,6 +63,12 @@ handles.comPorts = serialInfo.AvailableSerialPorts;
 handles.comMenuValue = 1;
 
 %Init wasd
+handles.speed = 150;
+handles.dir = 150;
+handles.wPressed = 0;
+handles.aPressed = 0;
+handles.dPressed = 0;
+handles.sPressed = 0;
 
 %Init timer
 
@@ -191,9 +197,10 @@ function figure1_KeyPressFcn(hObject, eventdata, handles)
 %	Character: character interpretation of the key(s) that was pressed
 %	Modifier: name(s) of the modifier key(s) (i.e., control, shift) pressed
 % handles    structure with handles and user data (see GUIDATA)
+check = 
 switch eventdata.Key
     case 'w'
-        if (handles.busyw == 0)
+        if (handles.wPressed == 0)
         handles.speed = 160;
         drive(handles.speed, handles.dir)
         handles.wPressed = 1;
@@ -205,10 +212,10 @@ switch eventdata.Key
         statusd = data(statusd);
         end
     case 's'
-        if (handles.busys == 0)
+        if (handles.sPressed == 0)
         handles.speed = 140;
         drive(handles.speed, handles.dir)
-        handles.busys = 1;
+        handles.sPressed = 1;
         else
         a = exist('statusd')
         if (a == 0)
@@ -217,18 +224,18 @@ switch eventdata.Key
         statusd = data(statusd);
         end
     case 'd'
-        if (handles.busyd == 0)
+        if (handles.dPressed == 0)
         handles.dir = 120;
         drive(handles.speed, handles.dir)
-        handles.busyd = 1;
+        handles.dPressed = 1;
         else
             
         end
     case 'a'
-        if (handles.busya == 0)
+        if (handles.aPressed == 0)
         handles.dir = 180;
         drive(handles.speed, handles.dir)     
-        handles.busya = 1;
+        handles.aPressed = 1;
         else
             
         end
@@ -249,3 +256,32 @@ function figure1_KeyReleaseFcn(hObject, eventdata, handles)
 %	Character: character interpretation of the key(s) that was released
 %	Modifier: name(s) of the modifier key(s) (i.e., control, shift) released
 % handles    structure with handles and user data (see GUIDATA)
+
+switch eventdata.Key
+    case 'w'
+        disp('Key is released')
+        drive(140, handles.dir);
+        drive(150, handles.dir);
+        handles.speed = 150;
+        handles.wPressed = 0;
+
+    case 's'
+        disp('Key is released')
+        drive(160, handles.dir);
+        drive(150, handles.dir);
+        handles.speed = 150;
+        handles.sPressed = 0;
+    case 'd'
+        disp('Key is released')
+       handles.dir = 150;
+       handles.dPressed = 0;
+       drive(handles.speed, handles.dir)
+    case 'a'
+        disp('Key is released')
+        handles.dir = 150;
+        handles.aPressed = 0;
+        drive(handles.speed, handles.dir)
+end
+
+%Update structure
+guidata(hObject, handles);
