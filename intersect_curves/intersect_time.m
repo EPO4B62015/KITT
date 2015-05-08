@@ -1,5 +1,5 @@
-function [ time_ip_150, time_ip_135 ] = intersect_time(lookup_distance)
-%load ('data_f_test.mat');
+function [ td_150, td_135 ] = intersect_time(lookup_distance)
+load ('data_f_test.mat');
 data_t_a = data_a_165;
 data_t_d = data_d_150_2;
 data_t_d_fast = data_d_135;
@@ -58,7 +58,7 @@ end
 pos_ip_150 = find(dist_time >= i_d);
 time_to_brake = time(pos_ip_150(1));
 brake_time_150 =  dist_time_d(d_150-i_d);
-time_ip_150 = [time_to_brake; brake_time_150];
+td_150 = [time_to_brake; brake_time_150];
 
 while(1)
 
@@ -73,7 +73,7 @@ velocity_d_fast_fitted = [velocity_d_fast_fitted(1:10);velocity_d_fast_fitted(1:
 end
 [i_d_fast,i_v3] = polyxpoly(dist,V_fitted,dist,velocity_d_fast_fitted);% intersection
 pos_ip_135 = find(dist_time >= i_d_fast);
-time_ip_135 = [time(pos_ip_135(1)); abs(0.5 - dist_time_d_fast(d_135 - i_d_fast))];
+td_135 = [time(pos_ip_135(1)); abs(0.5 - dist_time_d_fast(d_135 - i_d_fast))];
 
 
 end
