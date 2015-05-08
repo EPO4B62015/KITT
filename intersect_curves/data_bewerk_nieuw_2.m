@@ -1,4 +1,4 @@
-lookup_velocity = 2.3;
+lookup_velocity = 2.0;
 load ('data_f_test.mat');
 data_t_a = data_a_165;
 data_t_d = data_d_150_2;
@@ -50,7 +50,7 @@ while(1)
     if (i_v1 <= 1.02 * lookup_velocity)
         velocity_d_fitted = [velocity_d_fitted(1:10); velocity_d_fitted(1:end-10)];
     elseif (i_v1 >= 0.98 * lookup_velocity)
-        velocity_d_fitted = [velocity_d_fitted(10:end); velocity_d_fitted(end-10:end)];
+        velocity_d_fitted = [velocity_d_fitted(11:end); velocity_d_fitted(end-9:end)];
     else
         break;
     end
