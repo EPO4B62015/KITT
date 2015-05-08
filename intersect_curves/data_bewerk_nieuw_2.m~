@@ -49,11 +49,10 @@ while(1)
  % distance at which deceleration reaches 0 velocity
     if (i_v1 <= 1.02 * lookup_velocity)
         velocity_d_fitted = [velocity_d_fitted(1:10); velocity_d_fitted(1:end-10)];
-    elseif (i_v1 >= 0.98 * lookup_velocity)
-        velocity_d_fitted = [velocity_d_fitted(10:end); velocity_d_fitted(end-10:end)];
-    else
-        break;
+    else if (i_v1 >= 0.98 * lookup_velocity)
+        velocity_d_fitted = [velocity_d_fitted(10:end)];
     end
+velocity_d_fitted = [velocity_d_fitted(1:10); velocity_d_fitted(1:end-10)];
 end
 
 pos_150_zero = find(velocity_d_fitted <= 0);
