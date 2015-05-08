@@ -73,7 +73,7 @@ velocity_d_fast_fitted = [velocity_d_fast_fitted(1:10);velocity_d_fast_fitted(1:
 end
 [i_d_fast,i_v3] = polyxpoly(dist,V_fitted,dist,velocity_d_fast_fitted);% intersection
 pos_ip_135 = find(dist_time >= i_d_fast);
-time_ip_135 = [time(pos_ip_135(1)); abs(0.5 - dist_time_d_fast(d_135 - i_d_fast))];
+time_ip_135 = [time(pos_ip_135(1)); abs( 0.55 - dist_time_d_fast(d_135 - i_d_fast))];
 
 
 end
