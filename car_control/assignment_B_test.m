@@ -3,7 +3,7 @@
 
 distances_data(1:2) = 999
 i = 1
-V_opsnelheid = 1.2;%Wat is V_max met speed setting 165 bijv.
+V_opsnelheid = 2.4;%Wat is V_max met speed setting 165 bijv.
 %[info2, info] = intersect_time_velocity(V_opsnelheid);
 
 rem_tijd = info(2);
