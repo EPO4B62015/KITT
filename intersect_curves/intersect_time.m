@@ -72,7 +72,7 @@ d_135 = dist(pos_135_zero(1)); % distance at which deceleration
 
     if (d_135 < 0.98 * lookup_distance)
         velocity_d_fast_fitted = [velocity_d_fast_fitted(1:10);velocity_d_fast_fitted(1:end-10)];
-    elseif (d_135 >= lookup_distance)
+    elseif (d_135 > 1.02 * lookup_distance)
         velocity_d_fast_fitted = [velocity_d_fast_fitted(10:end);velocity_d_fast_fitted(end-10:end)];
     else 
         break

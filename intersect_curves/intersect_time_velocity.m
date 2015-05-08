@@ -48,9 +48,9 @@ while(1) % 150 roll out
 [i_d,i_v1] = polyxpoly(dist,V_fitted,dist,velocity_d_fitted);
  % distance at which deceleration reaches 0 velocity
 
-    if (i_v1 <= 1.02 * lookup_velocity)
+    if (i_v1 < 0.98 * lookup_velocity)
         velocity_d_fitted = [velocity_d_fitted(1:10); velocity_d_fitted(1:end-10)];
-    elseif (i_v1 >= 0.98 * lookup_velocity)
+    elseif (i_v1 > 1.02 * lookup_velocity)
         velocity_d_fitted = [velocity_d_fitted(10:end); velocity_d_fitted(end-10:end)];
     else
         break
@@ -68,9 +68,9 @@ td_150 = [time_to_brake; brake_time_150; d_150-i_d];
 while(1) % 135 braking
 [i_d_fast,i_v3] = polyxpoly(dist,V_fitted,dist,velocity_d_fast_fitted); % intersect
     
-    if (i_v3 <= 1.02 * lookup_velocity_
+    if (i_v3 < 0.98 * lookup_velocity)
         velocity_d_fast_fitted = [velocity_d_fast_fitted(1:10);velocity_d_fast_fitted(1:end-10)];
-    elseif (i_v3 >= lookup_velocity)
+    elseif (i_v3 > 1.02 * lookup_velocity)
         velocity_d_fast_fitted = [velocity_d_fast_fitted(10:end);velocity_d_fast_fitted(end-10:end)];
     else
         break
