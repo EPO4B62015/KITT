@@ -44,18 +44,15 @@ fitted_a = fitted_a(1:ii);  % truncate to that index
 dist_a = dist_a(1:ii);      % also for the dist_a because otherwise lengths don't match
 
 % -- Add 0.0 to the curve
-fitted_a = [0;fitted_a];
-dist_a = [0;dist_a];
-
 % -- Add (10.max) to the curve
-fitted_a = [fitted_a;max_a];
-dist_a = [dist_a;10];
+fitted_a = [0;fitted_a;max_a];
+dist_a = [0;dist_a;10];
 velocity_a = [velocity_a;max(velocity_a)];
 
 
 % - Deceleration
 % -- fit curve
-fit_d = polyfit(dist_d,velocity_d,3);
+fit_d = polyfit(dist_d,velocity_d,3); % poly fit order 3
 fitted_d = polyval(fit_d,dist_d);
 
 % -- Remove all data to the left of the maximum of the fitted curve
@@ -67,19 +64,17 @@ dist_d = dist_d(jj:end);        % also for the dist_d because matching lengths
 fitted_d(fitted_d<0) = 0;       % remove everything smaller than 0
 
 % -- add (0.max) to the curve
-fitted_d = [fitted_d(1);fitted_d]; % extend the graph to the y-axis in a straight line
-dist_d = [0;dist_d];            % make the graph touch the y-axis
-fitted_d = [fitted_d;0];        % make it reach zero in case it doesn't
-dist_d = [dist_d;10];            % extend the graph to some far away point
+fitted_d = [fitted_d(1);fitted_d;0]; % extend the graph to the y-axis in a straight line
+dist_d = [0;dist_d;10];           % extend the graph to some far away point
 
 
 % -  Plot ALL THE THINGS
 figure
 hold on
-max_v = max(max(velocity_d), max(velocity_a));
-ylim([0 max_v+0.5]);
+max_v = max(max(fitted_d), max(fitted_a));
+ylim([0 3]);
 xlim([0 3]);
-%plot(dist_a,velocity_a);'
+%plot(dist_a,velocity_a);
 plot(dist_a,fitted_a);
 %plot(dist_d,velocity_d(1:end-1));
 plot(dist_d,fitted_d);
@@ -88,6 +83,7 @@ xlabel('Distance in meters (m)');
 ylabel('Velocity in meters per second (m/s)');
 
 % use aquired smooth curves 
+[i_d,i_v] = polyxpoly(dist_a,fitted_a,dist_d,fitted_d); % intersect
 
 
 % TODO  COPY FROM OTHER SCRIPT (this shit doesn't work on my laptop for
