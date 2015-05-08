@@ -47,15 +47,21 @@ pos1 = find(velocity_d_fast_fitted < 0);
 velocity_d_fast_fitted(pos1(1):end) = 0;
 pos2 = find(velocity_d_fitted < 0);
 velocity_d_fitted(pos2(1):end) = 0;
+ini_fit_v = velocity_d_fitted(1);
 
 while(1) % 150 roll out
 [i_d,i_v1] = polyxpoly(dist,V_fitted,dist,velocity_d_fitted);
  % distance at which deceleration reaches 0 velocity
+step_size = abs(30 + round((i_v1 -lookup_velocity * 100),0));
 
     if (i_v1 < 0.98 * lookup_velocity)
-        velocity_d_fitted = [velocity_d_fitted(1:10); velocity_d_fitted(1:end-10)];
+        fit = [0];
+        fit(1:step_size,1) = ini_fit_v;
+        velocity_d_fitted = [fit; velocity_d_fitted(1:end-step_size)];
     elseif (i_v1 > 1.02 * lookup_velocity)
-        velocity_d_fitted = [velocity_d_fitted(11:end); velocity_d_fitted(end-9:end)];
+        fit = [0];
+        fit(1:step_size-1,1) = 0;
+        velocity_d_fitted = [ velocity_d_fitted((step_size):end);fit];
     else
         break
     end
@@ -71,14 +77,19 @@ td_150 = [time_to_brake; brake_time_150; d_150-i_d];
 
 while(1) % 135 braking
 [i_d_fast,i_v3] = polyxpoly(dist,V_fitted,dist,velocity_d_fast_fitted); % intersect
-    
+step_size = abs(30 + round((i_v3 -lookup_velocity * 100),0));
+
     if (i_v3 < 0.98 * lookup_velocity)
-        velocity_d_fast_fitted = [velocity_d_fast_fitted(1:10);velocity_d_fast_fitted(1:end-10)];
+        fit = [0];
+        fit(1:step_size,1) = ini_fit_v;
+        velocity_d_fast_fitted = [fit; velocity_d_fast_fitted(1:end-step_size)];
     elseif (i_v3 > 1.02 * lookup_velocity)
-        velocity_d_fast_fitted = [velocity_d_fast_fitted(11:end);velocity_d_fast_fitted(end-9:end)];
+        fit = [0];
+        fit(1:step_size-1,1) = 0;
+        velocity_d_fast_fitted = [ velocity_d_fast_fitted((step_size):end);fit];
     else
         break
-    end 
+    end
     
 end
 
@@ -86,6 +97,5 @@ pos_135_zero = find(velocity_d_fast_fitted < 0.02);
 d_135 = dist(pos_135_zero(1)); % distance at which deceleration
 pos_ip_135 = find(dist_time >= i_d_fast);
 td_135 = [time(pos_ip_135(1)); abs(0.5 - dist_time_d_fast(d_135 - i_d_fast)); d_135-i_d_fast];
-
 end
 
