@@ -72,6 +72,11 @@ handles.sPressed = 0;
 
 %Init timer
 
+%init meting
+global metingen
+metingen = [0 0 0 0 0 0 0 0 0]; 
+global position
+position = 1;
 % Update handles structure
 guidata(hObject, handles);
 
@@ -121,6 +126,14 @@ function connectButton_Callback(hObject, eventdata, handles)
 parent = get(hObject, 'Parent');
 popupMenu = findobj(parent, 'Tag', 'comMenu');
 comport = strcat('\\.\' ,popupMenu.String(popupMenu.Value) );
+EPOCommunications('close'); 
+result = EPOCommunications('open', comport);
+if(result == 1)
+    status = EPOCommunications('transmit', 'S'); 
+    EPOCommunications('transmit','A1');
+    hObject.String = 'Connected...';
+    hObject.Enable = 'off';
+end
 disp(comport);
 
 
@@ -151,14 +164,24 @@ function goButton_Callback(hObject, eventdata, handles)
 % hObject    handle to goButton (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-parent = get(hObject, 'Parent')
-distaceToTravel = findobj(parent, 'Tag', 'distanceToTravel');
-disp(distaceToTravel.String);
-%[t1, t2] = intersect_time(distaceToTravel.String); %Voor de gewenste
+global metingen
+global position
+metingen = [metingen; 0 0 0 0 0 0 0 0 0];
+position = position + 1;
+parent = get(hObject, 'Parent');
+distanceToTravel = findobj(parent, 'Tag', 'distanceToTravel');
+disp(distanceToTravel.String);
+distance_A = str2num(distanceToTravel.String);
+[t1, t2] = intersect_time(distance_A); %Voor de gewenste
 %afstand de acceleratie en deceleratie tijden uitreken
-t2 = [1;2];
-timer = timer_functies(t2(1), t2(2));
-start(timer)
+t_intersect = t2;
+metingen(position, 1) = t_intersect(1);
+metingen(position, 2) = t_intersect(2);
+metingen(position, 8) = distance_A;
+timer = timer_functies(t_intersect(1), t_intersect(2));
+disp('Tijden ingevoerd');
+disp(t_intersect);
+start(timer);
 
 % --- Executes on button press in Start_challengeB.
 function Start_challengeB_Callback(hObject, eventdata, handles)

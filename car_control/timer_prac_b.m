@@ -1,4 +1,4 @@
-function t = timer_test %Timer functie met een acceleratie tijd en een remtijd
+function t = timer_prac_b %Timer functie met een acceleratie tijd en een remtijd
 global time
 
 t = timer;
@@ -18,8 +18,7 @@ rechter_afstand2 = 999
 
 function timer_startFcn
 disp('Start');
-%drive start
-tic
+
 
 
 function timer_timerFcn(timerObj, timerEvent)
@@ -76,7 +75,7 @@ function timer_getFirstValues(timerObj, timerEvent)
 function timer_updateSpeed(timerObj, timerEvent)
     distance_l = linker_afstand1 - linker_afstand2
     distance_r = rechter_afstand1 - rechter_afstand2
-    %Tijd berekenen tussen 2 metingen
+    %Tijd berekenen tussen 2 metingen 
     
     v_l = distance_l / tijd;
     v_r = distance_r / tijd;
