@@ -98,4 +98,3 @@ d_135 = dist(pos_135_zero(1)); % distance at which deceleration
 pos_ip_135 = find(dist_time >= i_d_fast);
 td_135 = [time(pos_ip_135(1)); abs(0.5 - dist_time_d_fast(d_135 - i_d_fast)); d_135-i_d_fast];
 end
-
