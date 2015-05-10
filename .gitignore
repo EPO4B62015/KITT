@@ -1,0 +1,3 @@
+#Gitignore file, alles wat hierin staat wordt genegeerd door git.
+#.asv files worden genegeerd.
+*.asv
