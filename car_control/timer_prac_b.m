@@ -5,7 +5,7 @@ distances_data1(1:2) = 999;
 distances_data2(1:2) = 999;
 
 i = 1; %TEST variable
-t_delay = 0.180; %De maximale delay is 180 ms.
+t_delay = 0.120; %De maximale delay is 180 ms.
 
 t = timer;
 t.TimerFcn = @timer_getFirstValues;
@@ -88,9 +88,10 @@ t_start = 0;
         distances = data_distance;
         
         if(distances(1)<stop_reading_distance || distances(2)<stop_reading_distance)
-            %Pauseren voor het remmen.
+            %Pauseren voor het remmen. Eventueel nog delays meenemen in
+            %tijden
             time_till_break = ((distances(1)+distances(2))/2)-remafstand)/v_gem;
-            pause(time_till_break)
+            pause(time_till_break) %Halve delay eraf halen om daadwerkelijk op tijd te remmen
             drive(135,153);
             pause(rem_tijd);
             drive(150,153);

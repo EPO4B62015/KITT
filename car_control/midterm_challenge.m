@@ -43,8 +43,30 @@ t_start = 0;
         
         distances_data1 = datavoer(i)%data_distance(t_start);
         
+        %Nieuwe meting, als deze niet goed is. 
         if(distances_data1(1) ~= 999 && distances_data1(2) ~= 999)
-            %Tweede meting, als deze niet goed is. Opnieuw 2 metingen doen (dus Timer_getFirstValues wordt opnieuw aangeroepen)
+            %Als meting wel goed is dan:
+            %Afgelegde afstand opvragen van afstand/tijd plot
+            %Daarna de totale af te leggen afstand berekenen
+            %Invoeren bij prac A, remtijd en acceleratie tijd terugkrijgen
+            %Op basis daarvan tijd berekenen die je nog moet accelereren
+            %Daarna rem commando sturen.
+            
+            Afstand_afgelegd = afstand_tijd(distances_data1(3));%Afstand_tijd functie moet nog komen
+            tot_afstand = (distances_data1(1) + distances_data1(2))/2 - stop_afstand + Afstand_afgelegd; %Afgelegde weg + nog af te leggen weg
+            %Deze invoeren in prac A
+            %Intersect curves, of lookup daarvan aanroepen om de verwachte
+            %acctijd emtijd te bepalen
+            [acctijd, remtijd] = intersect_curves(tot_afstand);
+            
+            nog_te_accelereren_tijd = acctijd - distances_data1(3);
+            
+            %Als die klaar is met accelereren starten met remmen
+            %Als de nog te accelereren tijd binnen een delay zou gaan
+            %vallen. Dan stoppen met uitlezen van sensoren en timer starten voor het
+            %remmen.
+            
+            
         end
     end
 
@@ -62,7 +84,8 @@ t_start = 0;
         distances = data_distance;
         
         if(distances(1)<stop_reading_distance || distances(2)<stop_reading_distance)
-            %Pauseren voor het remmen.
+            %Pauseren voor het remmen. Eventueel nog delays meenemen in
+            %tijden.
             time_till_break = ((distances(1)+distances(2))/2)-remafstand)/v_gem;
             pause(time_till_break)
             drive(135,153);
