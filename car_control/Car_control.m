@@ -188,6 +188,7 @@ function midterm_3_meter_Callback(hObject, eventdata, handles)
 % hObject    handle to midterm_3_meter (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+ 
 distance_b = findobj(hObject.Parent.Children, 'Tag', 'distanceToStop');
 disp('Distance to stop is ');
 disp(distance_b.String);
@@ -201,13 +202,13 @@ if(afstand_tot_muur(1) ~= 999 && afstand_tot_muur(2) ~= 999)
     %We willen iets voor de gewenste afstand bijna stilstaan zodat we
     %met een lagere snelheid het punt kunnen benaderen
     rij_afstand = (afstand_tot_muur(1) + afstand_tot_muur(2))/2 - stop_afstand - 20; 
-    %opvragen uit lookup - intersect_curves
     
-    %Timer maken voor midterm binnen 
+    [acc_tijd,rem_tijd] = rem_acc_tijd(rij_afstand);
+
     %De remtijd moet dus iets korter zijn dan berekend omdat de auto niet
     %geheel stil moet staan.
-    t_d = t_d - (1/6*t_d) %t_d is de remtijd
-    t = midterm_challenge3();
+    rem_tijd = rem_tijd - (1/6*rem_tijd) %t_d is de remtijd
+    t = midterm_challenge3(acc_tijd, rem_tijd);
     start(t);
 elseif(afstand_tot_muur(1) ~= 999 || afstand_tot_muur(2) ~= 999)
     %opnieuw status opvragen
