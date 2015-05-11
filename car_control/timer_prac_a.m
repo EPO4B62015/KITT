@@ -1,7 +1,7 @@
 %Timer functies voor assignment A
 function t = timer_functies(t_a, t_d) %Timer functie met een acceleratie tijd en een remtijd
 
-t_delay = 0.150;
+t_delay = 0.090;
 t = timer;
 t.TimerFcn = @timer_timerFcn;
 t.StartFcn = @(~,~)timer_startFcn;
