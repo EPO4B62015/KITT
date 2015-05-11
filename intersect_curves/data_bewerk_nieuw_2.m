@@ -51,7 +51,7 @@ ini_fit_v = velocity_d_fitted(1);
 
 %%%%%%%%%%%%%%%%%%%%%%
 figure;
-plot(dist_time,time);
+plot(time,dist_time);
 %%%%%%%%%%%%%%%%%%%%%%
 while(1) % 150 roll out
 [i_d,i_v1] = polyxpoly(dist,V_fitted,dist,velocity_d_fitted);
