@@ -49,6 +49,10 @@ pos2 = find(velocity_d_fitted < 0);
 velocity_d_fitted(pos2(1):end) = 0;
 ini_fit_v = velocity_d_fitted(1);
 
+%%%%%%%%%%%%%%%%%%%%%%
+figure;
+plot(dist_time,time);
+%%%%%%%%%%%%%%%%%%%%%%
 while(1) % 150 roll out
 [i_d,i_v1] = polyxpoly(dist,V_fitted,dist,velocity_d_fitted);
  % distance at which deceleration reaches 0 velocity
