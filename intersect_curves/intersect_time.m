@@ -1,8 +1,9 @@
-function [ time_ip_150, time_ip_135 ] = intersect_time(lookup_distance)
+function [ distance_ip_150, distance_ip_135 ] = intersect_distance(lookup_time)
+% function which returns the stopping distance when 
 load ('data_f_test.mat');
 data_t_a = data_a_165;
-data_t_d = data_d_150_2;
-data_t_d_fast = data_d_135;
+data_t_d_roll = data_d_150_2;
+data_t_d_break = data_d_135;
 
 Afstand    = (abs(data_t_a(1:end,4)-data_t_a(1,4)))/100;
 Time_a  = data_t_a(1:end,7); %tijd vanaf zelfde moment metingen
@@ -49,7 +50,7 @@ while(1)
 pos_150_zero = find(velocity_d_fitted <= 0);
 d_150 = dist(pos_150_zero(1)); % distance at which deceleration reaches 0 velocity
 
-    if (d_150 >= lookup_distance)
+    if (d_150 >= lookup_time)
         break;
     end
 velocity_d_fitted = [velocity_d_fitted(1:10); velocity_d_fitted(1:end-10)];
@@ -58,7 +59,7 @@ end
 pos_ip_150 = find(dist_time >= i_d);
 time_to_brake = time(pos_ip_150(1));
 brake_time_150 =  dist_time_d(d_150-i_d);
-time_ip_150 = [time_to_brake; brake_time_150];
+distance_ip_150 = [time_to_brake; brake_time_150];
 
 while(1)
 
@@ -66,14 +67,14 @@ pos_135_zero = find(velocity_d_fast_fitted <= 0);
 d_135 = dist(pos_135_zero(1)); % distance at which deceleration
 
 
-    if (d_135 >= lookup_distance)
+    if (d_135 >= lookup_time)
         break
     end 
 velocity_d_fast_fitted = [velocity_d_fast_fitted(1:10);velocity_d_fast_fitted(1:end-10)];
 end
 [i_d_fast,i_v3] = polyxpoly(dist,V_fitted,dist,velocity_d_fast_fitted);% intersection
 pos_ip_135 = find(dist_time >= i_d_fast);
-time_ip_135 = [time(pos_ip_135(1)); abs( 0.55 - dist_time_d_fast(d_135 - i_d_fast))];
+distance_ip_135 = [time(pos_ip_135(1)); abs( 0.55 - dist_time_d_fast(d_135 - i_d_fast))];
 
 
 end
