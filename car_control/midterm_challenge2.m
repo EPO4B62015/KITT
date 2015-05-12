@@ -1,4 +1,5 @@
-function t = midterm_challenge2(stop_afstand) %Timer functie met een acceleratie tijd en een remtijd 
+%Midterm_challenge2 voor de 5 meter afstand.
+function t = midterm_challenge2(stop_afstand)
 clear distances_data
 distances_data1(1:2) = 999;
 distances_data2(1:2) = 999;
