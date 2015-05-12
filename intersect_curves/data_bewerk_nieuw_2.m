@@ -1,29 +1,34 @@
+% Input + load data %
 lookup_velocity = 2.5;
 load ('data_f_test.mat');
 data_t_a = data_a_165;
-data_t_d = data_d_150_2;
-data_t_d_fast = data_d_135;
+data_t_d_rollout = data_d_150_2;
+data_t_d_break = data_d_135;
+%%%%%%%%%%
 
+% 2.4 m/s is the maximum speed so anything above that doesn't make sensem %
 if (lookup_velocity > 2.4)
     lookup_velocity = 2.4;
 end
+%%%%%%%%%%
 
-Afstand    = (abs(data_t_a(1:end,4)-data_t_a(1,4)))/100;
-Time_a  = data_t_a(1:end,7); %tijd vanaf zelfde moment metingen
-V = diff(Afstand)./diff(Time_a);
-V = [0;V];
-Time_a  = [0;Time_a];
 
-data_t_d            = data_t_d(1:end,1:end);
-distance_d    = (abs(data_t_d(1:end,4)-data_t_d(1,4)))/100;
-time_d      = data_t_d(1:end,7);
+distance_a = (abs(data_t_a(1:end,4)-data_t_a(1,4)))/100;
+time_a  = data_t_a(1:end,7); %tijd vanaf zelfde moment metingen
+velocity_a = diff(distance_a)./diff(time_a);
+velocity_a = [0;velocity_a];
+time_a  = [0;time_a];
+
+data_t_d_rollout            = data_t_d_rollout(1:end,1:end);
+distance_d    = (abs(data_t_d_rollout(1:end,4)-data_t_d_rollout(1,4)))/100;
+time_d      = data_t_d_rollout(1:end,7);
 velocity_d  = diff(distance_d)./diff(time_d);   % Derivative
 time_d      = time_d(1:end) - time_d(1);
 distance_d_curve = distance_d(1:14);
 time_d_curve = time_d(1:14);
 
-distance_d_fast    = (abs(data_t_d_fast(4:end,4)-data_t_d_fast(4,4)))/100;
-time_d_fast  = data_t_d_fast(4:end,7); %tijd vanaf zelfde moment metingen
+distance_d_fast    = (abs(data_t_d_break(4:end,4)-data_t_d_break(4,4)))/100;
+time_d_fast  = data_t_d_break(4:end,7); %tijd vanaf zelfde moment metingen
 velocity_d_fast       = diff(distance_d_fast)./diff(time_d_fast);
 velocity_d_fast = [2.45; velocity_d_fast];
 time_d_fast = time_d_fast(1:end) - time_d_fast(1);
