@@ -2,21 +2,6 @@ function [ dist_start_rollout, dist_start_break ] = intersect_distance(lookup_ti
 % function which returns the distance at which to break or roll out when
 % given an input for the total drive time.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%
-%    ER WORDT VANNALES MET DE DATA GEDAAN MAAR DIT IS ZO INPUTDATA
-%    SPECIFIEK DAT DE HELE CODE OPNIEUW MOET WORDEN GESCHREVEN ALS ER
-%    ANDERE TEST/MEASUREMENTDATA IS...  ECHT NIET HANDIG.
-%    + ER IS 0 DOCUMENTATIE EN COMMENTAAR BIJ DE CODE, WAT HET DUS OOK
-%    ONNODIG VEEL WERK MAAKT OM EVEN DE FUNCTIE TE INVERTEREN. 
-%
-%    DUSJA, DEZE CODE IS NOG NIET AF VOOR DE GESTELDE DEADLINE VAN
-%    DINSDAGOCHTEND. ANYWAY, GENOEG GEZEKEN, IK KOM ER MORGEN BIJ DE
-%    OPENINGSVERGADERING WEL EVEN OP TERUG. XXX
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 % load the measurementdata
 load ('data_f_test.mat');
 % assign that data to the correct variables
