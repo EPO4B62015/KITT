@@ -1,35 +1,49 @@
+<<<<<<< HEAD
 %Midterm_challenge2 voor de 5 meter afstand.
 function t = midterm_challenge2(stop_afstand)
+=======
+function t = midterm_challenge2(stop_afstand) %Timer functie met een acceleratie tijd en een remtijd
+>>>>>>> 33b074ff96ba8c7389ff98b7fedb733f55c17f0d
 clear distances_data
 distances_data1(1:2) = 999;
 distances_data2(1:2) = 999;
+
+global metingen
+metingen = zeros(100, 14);
+global keeper;
+keeper = 1;
 
 i = 1; %TEST variable
 t_delay = 0.120; %De delay is ongeveer 120 ms.
 
 t = timer;
 t.TimerFcn = @timer_getFirstValues;
-t.StartFcn = @(~,~)timer_startFcn;
+t.StartFcn = @timer_startFcn;
 t.StopFcn = @timer_stopFcn;
 t.StartDelay = 0;
 t.Period = 0.01;
 t.ExecutionMode = 'fixedRate';
 t_start = 0;
 
-    function timer_startFcn
+    function timer_startFcn(timerObj, timerEvent)
         disp('Start');
         t_start = tic %Tijd start.
-        drive(165, 153);
+        status = drive(158, 153);
+        if(strcmp(status, ''))
+            stop(timerObj);
+        end
+            
     end
 
 
     function timer_getFirstValues(timerObj, timerEvent)
         %De snelheid bepalen van de auto aan de hand van twee meetpunten
-        
         distances_data1 = data_distance(t_start);
-        
+        metingen(keeper, 1) = distances_data1(1);
+        metingen(keeper, 2) = distances_data1(2);
+        metingen(keeper, 3) = distances_data1(3);
         if(distances_data1(1) ~= 999 && distances_data1(2) ~= 999)
-            %Tweede meting, als deze niet goed is. Opnieuw 2 metingen doen 
+            %Tweede meting, als deze niet goed is. Opnieuw 2 metingen doen
             %(dus Timer_getFirstValues wordt opnieuw aangeroepen).
             
             distances_data2 = data_distance(t_start);
@@ -38,7 +52,10 @@ t_start = 0;
                 
                 %Als een eerdere distance kleiner is is dit een foutieve meting
                 if(distances_data1(1) > distances_data2(1) && distances_data1(2) > distances_data2(2))
-                                        
+                    
+                    metingen(keeper, 4) = distances_data2(1);
+                    metingen(keeper, 5) = distances_data2(2);
+                    metingen(keeper, 6) = distances_data2(3);
                     %Afstanden die de twee sensoren detecteren
                     distance_l = distances_data1(1)-distances_data2(1);
                     distance_r = distances_data1(2)-distances_data2(2);
@@ -62,13 +79,21 @@ t_start = 0;
                     
                     %Afstand die het uitlezen maximaal duurt
                     read_distance = t_delay * v_gem;
-                    
+                    metingen(keeper, 7) = v_l;
+                    metingen(keeper, 8) = v_r;
+                    metingen(keeper, 9) = v_gem;
+                    metingen(keeper, 10) = data_rem(1);
+                    metingen(keeper, 11) = data_rem(2);
+                    metingen(keeper, 12) = data_rem(3);
+                    metingen(keeper, 13) = rem_afstand;
+                    metingen(keeper, 14) = read_distance;
                     %Als de snelheid bepaald is de snelheid updaten en
                     %bijhouden wanneer er geremd gaat worden
                     timerObj.TimerFcn = @timer_remmen;
                 end
             end
         end
+        keeper = keeper + 1;
     end
 
     function timer_remmen(timerObj, timerEvent)
@@ -125,6 +150,21 @@ t_start = 0;
             
             %Afstand die het uitlezen maximaal duurt
             read_distance = t_delay * v_gem;
+            metingen(keeper, 1) = distances_data1(1);
+            metingen(keeper, 2) = distances_data1(2);
+            metingen(keeper, 3) = distances_data1(3);
+            metingen(keeper, 2) = distances_data2(1);
+            metingen(keeper, 3) = distances_data2(2);
+            metingen(keeper, 4) = distances_data2(3);
+            metingen(keeper, 7) = v_l;
+            metingen(keeper, 8) = v_r;
+            metingen(keeper, 9) = v_gem;
+            metingen(keeper, 10) = data_rem(1);
+            metingen(keeper, 11) = data_rem(2);
+            metingen(keeper, 12) = data_rem(3);
+            metingen(keeper, 13) = rem_afstand;
+            metingen(keeper, 14) = read_distance;
+            keeper = keeper + 1;
         end
         
     end
