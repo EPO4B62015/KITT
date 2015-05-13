@@ -16,3 +16,6 @@
 slprj/
 
 *.m~
+
+# Excel temp files
+~*.xlsx
