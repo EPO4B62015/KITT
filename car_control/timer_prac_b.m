@@ -1,4 +1,7 @@
-function t = timer_prac_b(stop_afstand, testdata) %Timer functie met een acceleratie tijd en een remtijd
+%Timer functie voor practical Assignment B
+
+function t = timer_prac_b(stop_afstand) 
+
 global time
 global rem_afstand
 global rem_tijd
@@ -6,13 +9,12 @@ global read_distance
 global distances
 global v_gem
 
-Timer_prac_b_testdata = testdata;
 clear distances_data
 distances_data1(1:2) = 999;
 distances_data2(1:2) = 999;
 
 i = 1; %TEST variable
-t_delay = 0.120; %De maximale delay is 180 ms.
+t_delay = 0.120; %De delay was gemiddeld 120 ms.
 
 t = timer;
 t.TimerFcn = @timer_getFirstValues;
@@ -27,20 +29,21 @@ keeper = 1;
     function timer_startFcn
         disp('Start');
         t_start = tic; %Tijd start.
+        drive(165,153);
     end
 
 
     function timer_getFirstValues(timerObj, timerEvent)
         %De snelheid bepalen van de auto aan de hand van twee meetpunten
         if(keeper == 1)
-            distances_data1 = Timer_prac_b_testdata(i,1:end)%data_distance(t_start)
+            distances_data1 = data_distance(t_start)%Timer_prac_b_testdata(i,1:end)
             i = i + 1;
             
             if(distances_data1(1) ~= 999 && distances_data1(2) ~= 999)
                 %Tweede meting, als deze niet goed is. Opnieuw 2 metingen doen
                 %(dus Timer_getFirstValues wordt opnieuw aangeroepen).
                 
-                distances_data2 = Timer_prac_b_testdata(i,1:end)%data_distance(t_start);
+                distances_data2 = data_distance(t_start);%Timer_prac_b_testdata(i,1:end)%
                 i = i + 1;
                 
                 if(distances_data2(1) ~= 999 && distances_data2(2) ~= 999)
@@ -88,29 +91,23 @@ keeper = 1;
                 %met uitlezen en de timer starten voor het remmen.
                 
                 stop_reading_distance = rem_afstand + 2*read_distance
-                distances = Timer_prac_b_testdata(i,1:end)%data_distance;
+                distances = data_distance;%Timer_prac_b_testdata(i,1:end)
                 i = i + 1;
                 
                 if(distances(1)<stop_reading_distance || distances(2)<stop_reading_distance)
                     %Pauseren voor het remmen. Eventueel nog delays meenemen in
                     %tijden
-                    disp('Wachten')
-                    time_till_break = ((((distances(1)+distances(2))/2)-rem_afstand)/100)/v_gem 
-                    pause(time_till_break) %Halve delay eraf halen om daadwerkelijk op tijd te remmen
-                    disp('Start remmen')
-                    tic
-                    %drive(135,153);
+                    time_till_break = ((((distances(1)+distances(2))/2)-rem_afstand)/100)/v_gem-t_delay 
+                    pause(time_till_break)
+                    drive(135,153);
                     pause(rem_tijd);
-                    toc
-                    disp('Stop remmen')
-                    %drive(150,153);
+                    drive(150,153);
                     stop(timerObj);
                     return;
                 end   
             end     
         end
-        
-        
+            
         function timer_stopFcn(timerObj, timerEvent)
             disp('Timer is gestopt');
             delete(timerObj);

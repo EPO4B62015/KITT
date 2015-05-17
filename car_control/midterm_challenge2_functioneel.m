@@ -1,5 +1,5 @@
 %Deze is getest op dinsdag 12-5
-%En werk redelijk
+%En werkt redelijk
 %Challenge 5 meter
 function t = midterm_challenge2(stop_afstand) %Timer functie met een acceleratie tijd en een remtijd
 
@@ -93,7 +93,7 @@ t_start = 0;
                         metingen(keeper, 7) = v_l;
                         metingen(keeper, 8) = v_r;
                         metingen(keeper, 9) = v_gem;
-                        metingen(keeper, 10) = data_rem(1);
+                        metingen(keeper, 10) = data_rem(1); %Wordt niet gebruikt?
                         metingen(keeper, 11) = data_rem(2);
                         metingen(keeper, 12) = data_rem(3);
                         metingen(keeper, 13) = rem_afstand;
