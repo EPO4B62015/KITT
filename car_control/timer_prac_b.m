@@ -70,7 +70,7 @@ keeper = 1;
                         rem_afstand = stop_afstand + data_rem(3)*100
                         
                         %Afstand die het uitlezen maximaal duurt
-                        read_distance = t_delay * v_gem;
+                        read_distance = t_delay * v_gem* 100;
                         
                         %Als de snelheid bepaald is de timer updaten en
                         %bijhouden wanneer er geremd gaat worden
@@ -94,7 +94,7 @@ keeper = 1;
                 if(distances(1)<stop_reading_distance || distances(2)<stop_reading_distance)
                     %Pauseren voor het remmen. Eventueel nog delays meenemen in
                     %tijden
-                    time_till_break = (((distances(1)+distances(2))/2)-rem_afstand)/v_gem
+                    time_till_break = ((((distances(1)+distances(2))/2)-rem_afstand)/100)/v_gem 
                     pause(time_till_break) %Halve delay eraf halen om daadwerkelijk op tijd te remmen
                     disp('Start remmen')
                     tic
