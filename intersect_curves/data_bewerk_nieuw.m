@@ -2,7 +2,7 @@
 %clear all;
 load ('data_f_test.mat');
 
-lookup_distance = 3.5;
+lookup_distance = 3;
 
 data_t_a = data_a_165;
 data_t_d = data_d_150_2;
@@ -140,6 +140,6 @@ max_v = max(max(velocity_d), max(V));
 plot(dist,V_fitted);
 plot(dist,velocity_d_fitted);
 plot(dist,velocity_d_fast_fitted);
-legend('Acceleration','Deceleration');
+legend('Acceleration','Roll-out','Braking');
 xlabel('Distance in meters (m)');
 ylabel('Velocity in meters per second (m/s)');

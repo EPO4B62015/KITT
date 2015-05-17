@@ -1,5 +1,5 @@
 % Input + load data %
-lookup_velocity = 2.5;
+lookup_velocity = 2;
 load ('data_f_test.mat');
 data_t_a = data_a_165;
 data_t_d_rollout = data_d_150_2;
@@ -54,10 +54,7 @@ pos2 = find(velocity_d_fitted < 0);
 velocity_d_fitted(pos2(1):end) = 0;
 ini_fit_v = velocity_d_fitted(1);
 
-%%%%%%%%%%%%%%%%%%%%%%
-figure;
-plot(time,dist_time);
-%%%%%%%%%%%%%%%%%%%%%%
+
 while(1) % 150 roll out
 [i_d,i_v1] = polyxpoly(dist,V_fitted,dist,velocity_d_fitted);
  % distance at which deceleration reaches 0 velocity
@@ -106,3 +103,13 @@ pos_135_zero = find(velocity_d_fast_fitted < 0.02);
 d_135 = dist(pos_135_zero(1)); % distance at which deceleration
 pos_ip_135 = find(dist_time >= i_d_fast);
 td_135 = [time(pos_ip_135(1)); abs(0.5 - dist_time_d_fast(d_135 - i_d_fast)); d_135-i_d_fast];
+
+%%%%% FIGURES %%%%%
+figure
+hold on
+plot(dist,V_fitted);
+plot(dist,velocity_d_fitted);
+plot(dist,velocity_d_fast_fitted);
+legend('Acceleration','Roll-out','Braking');
+xlabel('Distance in meters (m)');
+ylabel('Velocity in meters per second (m/s)');
