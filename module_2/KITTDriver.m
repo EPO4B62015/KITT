@@ -1,3 +1,5 @@
+clear all;
+close all;
 d = 6;
 
 run KITTParameters.m
@@ -30,3 +32,9 @@ if(max(T1) < d - d*0.01)
     V_ini = V_ini  + 0.1;
 end
 end
+
+plot(T1,Y1,T2,Y2);
+xlim([0 8]);
+title('Velocity-Distance plot')
+xlabel('Distance[m]');
+ylabel('Velocity [m/s]');
