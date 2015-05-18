@@ -1,11 +1,9 @@
 %Challenge 5 meter
 function t = midterm_challenge2(stop_afstand) %Timer functie met een acceleratie tijd en een remtijd
 
-read_distance_multiplier = 4;
-t_till_break_delay = 0.45;
-
+clear distances_data
 distances_data1(1:2) = 999;
-distances(1:2) = 999;
+distances_data2(1:2) = 999;
 rem_afstand = 0;
 v_l = 0;
 v_r = 0;
@@ -18,9 +16,11 @@ read_distance = 0;
 rem_tijd = 0;
 global metingen
 metingen = zeros(100, 17);
+global keeper;
 keeper = 1;
 keeper2 = 1;
 
+i = 1; %TEST variable
 t_delay = 0.120; %De delay is ongeveer 120 ms.
 
 t = timer;
@@ -56,21 +56,23 @@ t_start = 0;
                 %Tweede meting, als deze niet goed is. Opnieuw 2 metingen doen
                 %(dus Timer_getFirstValues wordt opnieuw aangeroepen).
                 
-                distances = data_distance(t_start);
+                distances_data2 = data_distance(t_start);
                 
-                if(distances(1) ~= 999 && distances(2) ~= 999)
+                if(distances_data2(1) ~= 999 && distances_data2(2) ~= 999)
                     
                     %Als een eerdere distance kleiner is is dit een foutieve meting
-                    if(distances_data1(1) > distances(1) && distances_data1(2) > distances(2))
+                    if(distances_data1(1) > distances_data2(1) && distances_data1(2) > distances_data2(2))
                         %Als er 2 succesvolle metingen gedaan zijn doorgaan
                         %met het bepalen van de snelheid
+                        disp('TimerFcn aanpassen');
                         keeper2 = 2;
+                        disp('TimerFcn aangepast');
                     end
                 end
             end
             keeper = keeper + 1;
         else
-            
+            disp('Timer_remmen gestart');
             %Sensoren uitblijven lezen om te bepalen wanneer de auto moet gaan remmen
             %Als de sensoren een waarde zien die in de buurt van de remafstand
             %ligt moet er gestopt worden met uitlezen. Er zal dan een timer
@@ -84,13 +86,14 @@ t_start = 0;
                 %De distances updaten en opnieuw de snelheid bepalen aan de
                 %hand van de nieuwe meting en de vorige.
                 
-                distances_data1 = distances;
+                distances_data1 = distances_data2;
+                distances_data2 = distances;
                 %Afstanden die de twee sensoren detecteren
-                distance_l = distances_data1(1)-distances(1);
-                distance_r = distances_data1(2)-distances(2);
+                distance_l = distances_data1(1)-distances_data2(1);
+                distance_r = distances_data1(2)-distances_data2(2);
                 
                 %De tijd bepalen waarin die afstand wordt afgelegd
-                tijd_metingen = distances(3)-distances_data1(3);
+                tijd_metingen = distances_data2(3)-distances_data1(3);
                 
                 %De snelheid berekenen van de 2 metingen in m/s
                 v_l = (distance_l/100) / tijd_metingen;
@@ -111,9 +114,9 @@ t_start = 0;
                 metingen(keeper, 1) = distances_data1(1);
                 metingen(keeper, 2) = distances_data1(2);
                 metingen(keeper, 3) = distances_data1(3);
-                metingen(keeper, 4) = distances(1);
-                metingen(keeper, 5) = distances(2);
-                metingen(keeper, 6) = distances(3);
+                metingen(keeper, 4) = distances_data2(1);
+                metingen(keeper, 5) = distances_data2(2);
+                metingen(keeper, 6) = distances_data2(3);
                 metingen(keeper, 7) = v_l;
                 metingen(keeper, 8) = v_r;
                 metingen(keeper, 9) = v_gem;
@@ -125,14 +128,14 @@ t_start = 0;
                 keeper = keeper + 1;
             end
             
-            stop_reading_distance = rem_afstand + read_distance_multiplier * read_distance; %Op 1,5 delay in distance stoppen met lezen
+            stop_reading_distance = rem_afstand + 4 * read_distance; %Op 1,5 delay in distance stoppen met lezen
             metingen(keeper, 15) = stop_reading_distance;
             
             if(distances(1) < stop_reading_distance || distances(2) < stop_reading_distance)
                 %Pauseren voor het remmen. Eventueel nog delays meenemen in
                 %tijden
                 
-                time_till_break = ((((distances(1)+distances(2))/2)-rem_afstand)/100)/v_gem - t_till_break_delay;
+                time_till_break = ((((distances(1)+distances(2))/2)-rem_afstand)/100)/v_gem - 0.45;
                 metingen(keeper, 16) = time_till_break;
                 t_tic = tic;
                 pause(time_till_break) %Halve delay eraf halen om daadwerkelijk op tijd te remmen
