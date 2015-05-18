@@ -4,7 +4,9 @@ function t = midterm_challenge2(stop_afstand) %Timer functie met een acceleratie
 clear distances_data
 distances_data1(1:2) = 999;
 distances_data2(1:2) = 999;
+distances(1:2) = 999;
 rem_afstand = 0;
+Shorten_brake = 0.02; %Minder lang remmen. Auto rolde iets terug
 v_l = 0;
 v_r = 0;
 v_gem = 0;
@@ -36,7 +38,7 @@ t_start = 0;
     function timer_startFcn(timerObj, timerEvent)
         disp('Start');
         t_start = tic %Tijd start.
-        status = drive(165, 153);
+        status = drive(165, 148);
         if(strcmp(status, ''))
             stop(timerObj);
         end
@@ -48,20 +50,20 @@ t_start = 0;
         %Zolang de auto nog buiten bereik is de sensoren uit blijven lezen.
         if(keeper2 == 1)
             %De snelheid bepalen van de auto aan de hand van twee meetpunten
-            distances_data1 = data_distance(t_start);
-            metingen(keeper, 1) = distances_data1(1);
-            metingen(keeper, 2) = distances_data1(2);
-            metingen(keeper, 3) = distances_data1(3);
-            if(distances_data1(1) ~= 999 && distances_data1(2) ~= 999)
+            distances_data2 = data_distance(t_start);
+            metingen(keeper, 1) = distances_data2(1);
+            metingen(keeper, 2) = distances_data2(2);
+            metingen(keeper, 3) = distances_data2(3);
+            if(distances_data2(1) ~= 999 && distances_data2(2) ~= 999)
                 %Tweede meting, als deze niet goed is. Opnieuw 2 metingen doen
                 %(dus Timer_getFirstValues wordt opnieuw aangeroepen).
                 
-                distances_data2 = data_distance(t_start);
+                distances = data_distance(t_start);
                 
-                if(distances_data2(1) ~= 999 && distances_data2(2) ~= 999)
+                if(distances(1) ~= 999 && distances(2) ~= 999)
                     
                     %Als een eerdere distance kleiner is is dit een foutieve meting
-                    if(distances_data1(1) > distances_data2(1) && distances_data1(2) > distances_data2(2))
+                    if(distances_data2(1) > distances(1) && distances_data2(2) > distances(2))
                         %Als er 2 succesvolle metingen gedaan zijn doorgaan
                         %met het bepalen van de snelheid
                         disp('TimerFcn aanpassen');
@@ -72,7 +74,7 @@ t_start = 0;
             end
             keeper = keeper + 1;
         else
-            disp('Timer_remmen gestart');
+            disp('Tracking Velocity');
             %Sensoren uitblijven lezen om te bepalen wanneer de auto moet gaan remmen
             %Als de sensoren een waarde zien die in de buurt van de remafstand
             %ligt moet er gestopt worden met uitlezen. Er zal dan een timer
@@ -80,7 +82,7 @@ t_start = 0;
             
             %Als er een afstand gemeten wordt die binnen 2 delays ligt. Stoppen
             %met uitlezen en de timer starten voor het remmen.
-               
+            
             if(distances(1) ~= 999 && distances(2) ~= 999)
                 %Als de auto dus nog niet binnen range was om te gaan remmen.
                 %De distances updaten en opnieuw de snelheid bepalen aan de
@@ -97,14 +99,26 @@ t_start = 0;
                 
                 %De snelheid berekenen van de 2 metingen in m/s
                 v_l = (distance_l/100) / tijd_metingen;
+                if(v_l > 3)
+                    v_l = 3;
+                elseif(v_l < 0)
+                    v_l = 1.800003;
+                end
                 v_r = (distance_r/100) / tijd_metingen;
+                if(v_r > 3)
+                    v_r = 3;
+                elseif(v_r < 0)
+                    v_r = 1.8000003;
+                end
                 %Om uitschieters te beperken bepalen we de gemiddelde snelheid van
                 %de 2 sensoren.
                 v_gem = (v_r+v_l)/2;
                 
+                
+                
                 [data_uitrol, data_rem] = velocity_lookup(v_gem);
                 
-                rem_tijd = data_rem(2);
+                rem_tijd = data_rem(2) - Shorten_brake ;
                 
                 %Afstand waarop geremd moet gaan worden
                 rem_afstand = stop_afstand + data_rem(3) * 100;%afstand tot muur
@@ -126,35 +140,35 @@ t_start = 0;
                 metingen(keeper, 13) = rem_afstand;
                 metingen(keeper, 14) = read_distance;
                 keeper = keeper + 1;
-            end
-            
-            stop_reading_distance = rem_afstand + 4 * read_distance; %Op 1,5 delay in distance stoppen met lezen
-            metingen(keeper, 15) = stop_reading_distance;
-            
-            if(distances(1) < stop_reading_distance || distances(2) < stop_reading_distance)
-                %Pauseren voor het remmen. Eventueel nog delays meenemen in
-                %tijden
                 
-                time_till_break = ((((distances(1)+distances(2))/2)-rem_afstand)/100)/v_gem - 0.45;
-                metingen(keeper, 16) = time_till_break;
-                t_tic = tic;
-                pause(time_till_break) %Halve delay eraf halen om daadwerkelijk op tijd te remmen
-                metingen(keeper - 1, 17) = toc(t_tic);
-                drive(135,153);
-                metingen(keeper, 17) = toc(t_tic);
-                pause(rem_tijd);
-                drive(150,153);
                 
-                metingen(keeper+1, 6) = toc(t_start);
-                distances = data_distance(t_start);
-                metingen(keeper + 3, 1) = distances(1);
-                metingen(keeper + 3, 2) = distances(2);
-                metingen(keeper + 3, 3) = distances(3);
-                stop(timerObj);
-                return;
+                stop_reading_distance = rem_afstand + 4 * read_distance; %Op 1,5 delay in distance stoppen met lezen
+                metingen(keeper, 15) = stop_reading_distance;
+                
+                if(distances(1) < stop_reading_distance || distances(2) < stop_reading_distance)
+                    %Pauseren voor het remmen. Eventueel nog delays meenemen in
+                    %tijden
+                    
+                    time_till_break = ((((distances(1)+distances(2))/2)-rem_afstand)/100)/v_gem - 0.45;
+                    metingen(keeper, 16) = time_till_break;
+                    t_tic = tic;
+                    pause(time_till_break) %Halve delay eraf halen om daadwerkelijk op tijd te remmen
+                    metingen(keeper - 1, 17) = toc(t_tic);
+                    drive(135,148);
+                    metingen(keeper, 17) = toc(t_tic);
+                    pause(rem_tijd);
+                    drive(150,153);
+                    
+                    metingen(keeper+1, 6) = toc(t_start);
+                    distances = data_distance(t_start);
+                    metingen(keeper + 3, 1) = distances(1);
+                    metingen(keeper + 3, 2) = distances(2);
+                    metingen(keeper + 3, 3) = distances(3);
+                    stop(timerObj);
+                    return;
+                end
             end
             distances = data_distance(t_start);
-            
         end
     end
 
