@@ -38,7 +38,7 @@ t_start = 0;
     function timer_startFcn(timerObj, timerEvent)
         disp('Start');
         t_start = tic %Tijd start.
-        status = drive(165, 153);
+        status = drive(160, 153);
         if(strcmp(status, ''))
             stop(timerObj);
         end
@@ -156,7 +156,7 @@ t_start = 0;
                     %Pauseren voor het remmen. Eventueel nog delays meenemen in
                     %tijden
                     
-                    time_till_break = ((((min(distances(1:2)))-rem_afstand)/100)/v_gem) -0.45;
+                    time_till_break = ((((min(distances(1:2)))-rem_afstand)/100)/v_gem) -0.35;
                     metingen(keeper, 16) = time_till_break;
                     t_tic = tic;
                     pause(time_till_break) %Halve delay eraf halen om daadwerkelijk op tijd te remmen
