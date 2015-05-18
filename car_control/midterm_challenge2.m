@@ -1,6 +1,11 @@
 %Challenge 5 meter
 function t = midterm_challenge2(stop_afstand) %Timer functie met een acceleratie tijd en een remtijd
 
+SPEED_SETTING = 160;
+STEER_SETTING = 153;
+T_TILL_BRAKE_DELAY = 0.35;
+READ_DISTANCE_MULTIPLIER = 4;
+
 clear distances_data
 distances_data1(1:2) = 999;
 distances_data2(1:2) = 999;
@@ -38,7 +43,7 @@ t_start = 0;
     function timer_startFcn(timerObj, timerEvent)
         disp('Start');
         t_start = tic %Tijd start.
-        status = drive(160, 153);
+        status = drive(SPEED_SETTING, STEER_SETTING);
         if(strcmp(status, ''))
             stop(timerObj);
         end
@@ -149,22 +154,22 @@ t_start = 0;
                 keeper = keeper + 1;
                 
                 
-                stop_reading_distance = rem_afstand + 4 * read_distance; %Op 1,5 delay in distance stoppen met lezen
+                stop_reading_distance = rem_afstand + READ_DISTANCE_MULTIPLIER * read_distance; %Op 1,5 delay in distance stoppen met lezen
                 metingen(keeper, 15) = stop_reading_distance;
                 
                 if(distances(1) < stop_reading_distance || distances(2) < stop_reading_distance)
                     %Pauseren voor het remmen. Eventueel nog delays meenemen in
                     %tijden
                     
-                    time_till_break = ((((min(distances(1:2)))-rem_afstand)/100)/v_gem) -0.35;
+                    time_till_break = ((((min(distances(1:2)))-rem_afstand)/100)/v_gem) - T_TILL_BRAKE_DELAY;
                     metingen(keeper, 16) = time_till_break;
                     t_tic = tic;
                     pause(time_till_break) %Halve delay eraf halen om daadwerkelijk op tijd te remmen
                     metingen(keeper - 1, 17) = toc(t_tic);
-                    drive(135,153);
+                    drive(135,STEER_SETTING);
                     metingen(keeper, 17) = toc(t_tic);
                     pause(rem_tijd);
-                    drive(150,153);
+                    drive(150,STEER_SETTING);
                     
                     metingen(keeper+1, 6) = toc(t_start);
                     distances = data_distance(t_start);
