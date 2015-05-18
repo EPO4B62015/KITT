@@ -1,5 +1,5 @@
 %Timer functies voor assignment A
-function t = timer_functies(t_a, t_d) %Timer functie met een acceleratie tijd en een remtijd
+function t = timer_prac_a(t_a, t_d) %Timer functie met een acceleratie tijd en een remtijd
 
 t_delay = 0.090;
 t = timer;
@@ -10,6 +10,7 @@ t.StartDelay = t_a+t_delay;
 t.Period = t_d;
 t.TasksToExecute = 2;
 t.ExecutionMode = 'fixedRate';
+t.ErrorFcn = @(~,~)timer_error;
 
 
 function timer_startFcn
@@ -35,7 +36,10 @@ elseif(timerObj.TasksExecuted == 2)
 else
     disp('Error');
 end
-
+function timer_error
+        disp('Error');
+        drive(150, 150);
+    end
 function timer_stopFcn(timerObj, timerEvent)
 disp('Timer is gestopt.');
 global metingen
