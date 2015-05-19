@@ -190,25 +190,3 @@ t_start = 0;
     end
 end
 
-% read_distance = t_delay * v_gem * 100;
-% metingen(keeper, 1) = distances_data1(1);
-% metingen(keeper, 2) = distances_data1(2);
-% metingen(keeper, 3) = distances_data1(3);
-% metingen(keeper, 4) = distances_data2(1);
-% metingen(keeper, 5) = distances_data2(2);
-% metingen(keeper, 6) = distances_data2(3);
-% metingen(keeper, 7) = v_l;
-% metingen(keeper, 8) = v_r;
-% metingen(keeper, 9) = v_gem;
-% metingen(keeper, 10) = data_rem(1);
-% metingen(keeper, 11) = data_rem(2);
-% metingen(keeper, 12) = data_rem(3);
-% metingen(keeper, 13) = rem_afstand;
-% metingen(keeper, 14) = read_distance;
-% metingen(keeper, 15) = stop_reading_distance;
-% metingen(keeper, 16) = time_till_break;
-% metingen(keeper - 1, 17) = toc(t_tic); t_tic is voor time till break pause
-% metingen(keeper, 17) = toc(t_tic);
-% metingen(keeper + 3, 1) = distances(1); Op moment van stilstaan gemeten
-% metingen(keeper + 3, 2) = distances(2);
-% metingen(keeper + 3, 3) = distances(3);
