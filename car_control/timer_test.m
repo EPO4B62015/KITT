@@ -4,6 +4,7 @@ t = timer;
 t.TimerFcn = @timer_timerFcn;
 t.StartFcn = @(~,~)timer_startFcn;
 t.StopFcn = @timer_stopFcn;
+t.ErrorFcn = @(~,~)timer_timerFcn2
 t.StartDelay = 0;
 t.Period = 0.100;
 t.ExecutionMode = 'fixedRate';
@@ -17,16 +18,13 @@ time = zeros(2,1);
 
     function timer_timerFcn(timerObj, timerEvent)
         disp('Timer functie');
-        if(timerObj.TasksExecuted == 5)
-            timerObj.TimerFcn = @timer_timerFcn2
-        end
+       
     end
 
-    function timer_timerFcn2(timerObj, timerEvent)
+    function timer_timerFcn2
         disp('Timer functie 2');
-        if(timerObj.TasksExecuted == 7)
-            stop(timerObj)
-        end
+        disp('Error');
+       
     end
 
     function timer_stopFcn(timerObj, timerEvent)
