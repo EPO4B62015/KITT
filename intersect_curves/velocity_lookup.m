@@ -1,5 +1,5 @@
 function [t_uit, t_rem] = velocity_lookup(velocity)
-load data_velocity_new
+load data_velocity_new_new
 find_v = velocity;
 if(find_v < 1.32)
     find_v = 1.32;

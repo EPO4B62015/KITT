@@ -1,9 +1,9 @@
 %Challenge 5 meter
 function t = midterm_challenge2(stop_afstand) %Timer functie met een acceleratie tijd en een remtijd
 
-SPEED_SETTING = 160;
+SPEED_SETTING = 165;
 STEER_SETTING = 153;
-T_TILL_BRAKE_DELAY = 0.35;
+T_TILL_BRAKE_DELAY = 0.45;
 READ_DISTANCE_MULTIPLIER = 4;
 
 clear distances_data
@@ -11,7 +11,7 @@ distances_data1(1:2) = 999;
 distances_data2(1:2) = 999;
 distances(1:2) = 999;
 rem_afstand = 0;
-Shorten_brake = 0.015; %Minder lang remmen. Auto rolde iets terug
+Shorten_brake = 0.08; %Minder lang remmen. Auto rolde iets terug 0.08 voor 160
 v_l = 0;
 v_r = 0;
 v_gem = 0;

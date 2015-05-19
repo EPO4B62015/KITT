@@ -1,4 +1,4 @@
-comport = '\\.\COM10'; %Bluetooth Module: 3215 
+comport = '\\.\COM9'; %Bluetooth Module: 3215 
 EPOCommunications('close'); 
 result = EPOCommunications('open', comport); 
 status = EPOCommunications('transmit', 'S'); 
