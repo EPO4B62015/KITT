@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 function [TDOA, TDOA_2] = ch5_tdoa(input_matrix)
 speed_of_sound = 340;
 
@@ -72,5 +71,4 @@ TDOA = TDOA ./ 48000;
 TDOA = TDOA .* speed_of_sound;
 
 TDOA_2 = [TDOA(2,1);TDOA(3,1);TDOA(4,1);TDOA(5,1);TDOA(3,2);TDOA(4,2);TDOA(5,2);TDOA(4,3);TDOA(5,3);TDOA(5,4)];
->>>>>>> origin/module_3
 end
