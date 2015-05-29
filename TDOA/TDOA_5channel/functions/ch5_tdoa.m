@@ -1,4 +1,4 @@
-function TDOA = ch5_tdoa(input_matrix)
+function [TDOA, TDOA_2] = ch5_tdoa(input_matrix)
 speed_of_sound = 340;
 
 data_mic_1 = input_matrix(1,(1:length(input_matrix)),1)';
@@ -26,7 +26,9 @@ for x = 1:5
         TDOA(x,y) = position_mic_mf(x) - position_mic_mf(y);
     end
 end
+
 TDOA = TDOA ./ 48000;
 TDOA = TDOA .* speed_of_sound;
 
+TDOA_2 = [TDOA(2,1);TDOA(3,1);TDOA(4,1);TDOA(5,1);TDOA(3,2);TDOA(4,2);TDOA(5,2);TDOA(4,3);TDOA(5,3);TDOA(5,4)];
 end
