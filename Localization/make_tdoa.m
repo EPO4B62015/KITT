@@ -1,8 +1,11 @@
 function tdoa = make_tdoa(x_matrix_mics, x_location)
+% Generates test TDOA data
+% input: mic positions, some field position
+% output: TDOA data
     [row, col] = size(x_matrix_mics);
     dimensions = length(x_location);
-    if(col ~= dimensions)
-        error('Mics location does not work with x_location');
+    if(col ~= dimensions) % check for same dimensions
+        error('Mics location dimensions dont match with x_location dimensions');
     end
     elements = (row * (row - 1))/2;
     tdoa = zeros(elements, 1);
