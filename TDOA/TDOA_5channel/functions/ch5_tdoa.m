@@ -14,16 +14,22 @@ data_mic_5 = input_matrix(1,(1:length(input_matrix)),5)';
 [channel_fe_5, channel_mf_5] = channel_estimation_5ch(data_mic_5);
 
 
-position_mic_mf(1) = distance(channel_mf_1, channel_mf_1);
-position_mic_mf(2) = distance(channel_mf_1, channel_mf_2);
-position_mic_mf(3) = distance(channel_mf_1, channel_mf_3);
-position_mic_mf(4) = distance(channel_mf_1, channel_mf_4);
-position_mic_mf(5) = distance(channel_mf_1, channel_mf_5);
+% position_mic_mf(1) = distance(channel_mf_1, channel_mf_1);
+% position_mic_mf(2) = distance(channel_mf_1, channel_mf_2);
+% position_mic_mf(3) = distance(channel_mf_1, channel_mf_3);
+% position_mic_mf(4) = distance(channel_mf_1, channel_mf_4);
+% position_mic_mf(5) = distance(channel_mf_1, channel_mf_5);
+
+position_mic_mf(1) = distance(channel_fe_1, channel_fe_1);
+position_mic_mf(2) = distance(channel_fe_1, channel_fe_2);
+position_mic_mf(3) = distance(channel_fe_1, channel_fe_3);
+position_mic_mf(4) = distance(channel_fe_1, channel_fe_4);
+position_mic_mf(5) = distance(channel_fe_1, channel_fe_5);
 
 TDOA = zeros(5);
 for x = 1:5
     for y = 1:5
-        TDOA(x,y) = position_mic_mf(x) - position_mic_mf(y);
+        TDOA(y,x) = position_mic_mf(x) - position_mic_mf(y);
     end
 end
 
