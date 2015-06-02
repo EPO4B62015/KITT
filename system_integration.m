@@ -26,11 +26,8 @@
 %- controller will take input, compare it to the next
 %waypoint/challenge/whatever and generate the needed data so the plant can
 %compute the needed drive and steer commands.
+    
 
-% % %   How do we implement the control loop? Simulink? transfer functions?
-    
-   
-    
 % 3. Waypoints exist for more advanced tasks, distance between those
 % waypoints are at least 1.5m, car should stop for at least 2sec there and
 % our computer (running the control loop) should give a signal.
