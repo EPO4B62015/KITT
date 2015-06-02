@@ -1,4 +1,5 @@
-function [ peak_position ] = distance( h1, h2)
+%Calculate the peak locations based 
+function [ peak_position ] = distance(h1, h2)
 %DISTANCE Summary of this function goes here
 %   Detailed explanation goes here
 
