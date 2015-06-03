@@ -54,8 +54,8 @@ function Grid_OpeningFcn(hObject, eventdata, handles, varargin)
 
 % Choose default command line output for Grid
 handles.output = hObject;
-handles.x = 0;
-handles.y = 0;
+handles.x = [zeros(1,100)];
+handles.y = [zeros(1,100)];
 grid on;
 
 % Update handles structure
