@@ -22,7 +22,7 @@ function varargout = Grid(varargin)
 
 % Edit the above text to modify the response to help Grid
 
-% Last Modified by GUIDE v2.5 29-May-2015 16:39:29
+% Last Modified by GUIDE v2.5 03-Jun-2015 21:37:17
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -54,15 +54,16 @@ function Grid_OpeningFcn(hObject, eventdata, handles, varargin)
 
 % Choose default command line output for Grid
 handles.output = hObject;
-handles.x = [zeros(1,100)];
-handles.y = [zeros(1,100)];
+
+handles.x = 0; %Initialise position vectors
+handles.y = 0;
 grid on;
 
 % Update handles structure
 guidata(hObject, handles);
 
 % UIWAIT makes Grid wait for user response (see UIRESUME)
-% uiwait(handles.figure1);
+% uiwait(handles.Car_grid);
 
 
 % --- Outputs from this function are returned to the command line.
@@ -81,6 +82,6 @@ function pushbutton1_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-x = [1:100]
-y = x.^2
-plot(x,y)
+x = handles.x;
+y = handles.y;
+scatter(x,y);
