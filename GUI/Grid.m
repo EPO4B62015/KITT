@@ -85,3 +85,4 @@ function pushbutton1_Callback(hObject, eventdata, handles)
 x = handles.x;
 y = handles.y;
 scatter(x,y);
+
