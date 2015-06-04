@@ -1,4 +1,4 @@
-function t = steering_timer(speed,direction,t_a, t_d) %Timer functie met een acceleratie tijd en een remtijd
+function t = steering_timer(speed,direction,t_a, t_d) %Timer functie met speed, direction en tijden
 
 t_delay = 0.090;
 t = timer;
