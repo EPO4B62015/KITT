@@ -85,4 +85,7 @@ function pushbutton1_Callback(hObject, eventdata, handles)
 x = handles.x;
 y = handles.y;
 scatter(x,y);
+global fig_handle2;
+fig_handle = findobj(hObject.Parent.Children, 'Tag', 'pushbutton1');
+fig_handle2 = fig_handle;
 
