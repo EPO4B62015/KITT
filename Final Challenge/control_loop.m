@@ -27,6 +27,15 @@ t.ExecutionMode = 'fixedRate';
                 end
             case States.Straight%Example, states and flow can be altered.
                 disp('Immer gerade aus');
+                %Planner
+                %drive car
+                %Sample
+                %TDOA
+                %localize
+                %if fail
+                %sample
+                %tdoa
+                %localize
             case States.Corner
                 disp('Cornering')
         end

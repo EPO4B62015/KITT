@@ -1,6 +1,9 @@
-function x = localize_5ch(tdoa_matrix, last_pos, theta)
+function pass = localize_5ch(tdoa_matrix, expected_travel_distance)
 %Checking if calculations are possible
-[row, col] = size(x_matrix);
+global position;
+x_matrix = [0 0 30; 413 0 30; 413 210 30; 0 210 30; 173 0 77];
+row = 5;
+col = 3;
 elements = (row * (row - 1))/2;
 
 if(elements ~= length(tdoa_matrix))
@@ -34,11 +37,19 @@ end
 
 diff = x - last_pos;
 angle = atan2d(diff(2), diff(1));
+distance_traveled = norm(diff);
 %Angle calculated. What to reject and what to do when rejected?
-if(abs(angle-theta) < 15)
+if(abs(angle - position(3, end)) < 15)
     %Accept
+    if(distance_traveled < expected_travel_distance * 1.5)
+        pass = 1;
+        position = [position; x(1) x(2) 0];
+    else
+        pass = 0;
+    end
 else
     %reject
+    pass = 0;
 end
 
 end
