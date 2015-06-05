@@ -1,5 +1,5 @@
 %Challenge 5 meter
-function t = midterm_challenge2(stop_afstand) %Timer functie met een acceleratie tijd en een remtijd
+function t = control_loop() %Timer functie met een acceleratie tijd en een remtijd
 
 
 state = States.VoltageMeasure;
