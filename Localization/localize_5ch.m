@@ -12,8 +12,10 @@ end
 
 if(abs(tdoa_matrix(1)) < 10 && abs(tdoa_matrix(8) < 10))
     disp('Close to middle Y');%Grid?
+    pass = 0;
 elseif(abs(tdoa_matrix(3)) < 10 && abs(tdoa_matrix(5) < 10))
     disp('Close to middle X');%Grid?
+    pass = 0;
 else
     A_matrix = zeros(elements, col + row - 1);
     b_matrix = zeros(elements, 1);
