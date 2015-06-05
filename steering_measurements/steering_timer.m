@@ -1,40 +1,27 @@
-function t = steering_timer(speed,direction,t_a, t_d) %Timer functie met speed, direction en tijden
+function t = steering_timer(t_a) %Timer functie met speed, direction en tijden
 
-t_delay = 0.090;
 t = timer;
 t.TimerFcn = @timer_timerFcn;
 t.StartFcn = @(~,~)timer_startFcn;
 t.StopFcn = @timer_stopFcn;
-t.StartDelay = t_a+t_delay;
-t.Period = t_d;
-t.TasksToExecute = 2;
+t.StartDelay = t_a;
+t.TasksToExecute = 1;
 t.ExecutionMode = 'fixedRate';
 t.ErrorFcn = @(~,~)timer_error;
-
 
     function timer_startFcn
         disp('Start');
         tic;
-        drive(speed,direction);
+        drive(155,100);
     end
 
     function timer_timerFcn(timerObj, timerEvent)
         global metingen
         global position
-        if(timerObj.TasksExecuted == 1)
-            disp('Drive D153 135');
+            disp('stop');
             metingen(position, 3) = toc;
-            drive(135, 153)
-            metingen(position, 4) = toc;
-            
-        elseif(timerObj.TasksExecuted == 2)
-            disp('Drive D153 150');
-            metingen(position, 5) = toc;
             drive(150, 153)
-            metingen(position, 6) = toc;
-        else
-            disp('Error');
-        end
+            metingen(position, 4) = toc;
     end
     function timer_error
         disp('Error');
