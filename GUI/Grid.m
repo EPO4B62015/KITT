@@ -22,7 +22,7 @@ function varargout = Grid(varargin)
 
 % Edit the above text to modify the response to help Grid
 
-% Last Modified by GUIDE v2.5 03-Jun-2015 21:37:17
+% Last Modified by GUIDE v2.5 05-Jun-2015 16:31:24
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -63,7 +63,7 @@ grid on;
 guidata(hObject, handles);
 
 % UIWAIT makes Grid wait for user response (see UIRESUME)
-% uiwait(handles.Car_grid);
+% uiwait(handles.Grid);
 
 
 % --- Outputs from this function are returned to the command line.
@@ -82,10 +82,11 @@ function pushbutton1_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+
 x = handles.x;
 y = handles.y;
-scatter(x,y);
-global fig_handle2;
-fig_handle = findobj(hObject.Parent.Children, 'Tag', 'pushbutton1');
-fig_handle2 = fig_handle;
+scatter(x,y); %Draws a line between all points
+% global fig_handle2;
+% fig_handle = findobj(hObject.Parent.Children, 'Tag', 'pushbutton1');
+% fig_handle2 = fig_handle;
 

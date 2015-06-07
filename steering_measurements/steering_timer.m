@@ -12,16 +12,16 @@ t.ErrorFcn = @(~,~)timer_error;
     function timer_startFcn
         disp('Start');
         tic;
-        drive(155,100);
+        drive(158,200);
     end
 
     function timer_timerFcn(timerObj, timerEvent)
         global metingen
         global position
             disp('stop');
-            metingen(position, 3) = toc;
+            %metingen(position, 3) = toc;
             drive(150, 153)
-            metingen(position, 4) = toc;
+            %metingen(position, 4) = toc;
     end
     function timer_error
         disp('Error');
@@ -32,7 +32,7 @@ t.ErrorFcn = @(~,~)timer_error;
         disp('Timer is gestopt.');
         global metingen
         global position
-        metingen(position, 7) = metingen(position, 5) - metingen(position, 3);
+        %metingen(position, 7) = metingen(position, 5) - metingen(position, 3);
         delete(timerObj);
     end
 end
