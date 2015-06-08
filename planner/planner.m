@@ -1,9 +1,9 @@
-%Planner
+function [ time,steer ] = planner(position,next_position)
 %input: position(x,y,orientation) ,next_position(x,y), 
 d_x             = next_position(1)-position(1,end);
 d_y             = next_position(2)-position(2,end);
 desired_theta   = arctan2d(d_y/d_x);
-d_theta         = desired_theta-position(3,end);
+d_theta         = desired_theta - position(3,end);
 distance        = sqrt(d_x^2 + d_y^2);
 
 if madeturn == true
@@ -29,4 +29,6 @@ else
         end
         time = turn(d_theta);
     end
+end
+
 end
