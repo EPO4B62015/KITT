@@ -2,6 +2,7 @@
 function t = control_loop() %Timer functie met een acceleratie tijd en een remtijd
 
 global position
+global voltage
 position = [0; 0; 0];%start position
 
 state = States.Straight;
@@ -23,12 +24,13 @@ t.ExecutionMode = 'fixedRate';
     function timer_loop(timerObj, timerEvent)
         switch(state)
             case States.VoltageMeasure
-                disp('Voltage measuring')
-                if(voltage > 17)%Example
+                disp('Measuring Voltage')
+                measure_voltage;
+                if(voltage.done == true)
                     state = States.Straight;
                 end
             case States.Straight%Example, states and flow can be altered.
-                disp('Immer gerade aus');
+                disp('Driving straight');
                 %Planner
                 %drive car
                 state = States.Sample_straight;
@@ -36,7 +38,7 @@ t.ExecutionMode = 'fixedRate';
             case States.Corner
                 disp('Cornering')
             case States.Sample_straight
-                disp('Sample_straight');
+                disp('Sampleing after straight');
                 %Sample
                 %TDOA
                 TDOA_data = TDOA;
@@ -49,7 +51,7 @@ t.ExecutionMode = 'fixedRate';
                 end
                 
             case States.Sample_corner
-                disp('Sample_corner');
+                disp('Sampleing after corner');
         end
     end
 
