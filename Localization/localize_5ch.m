@@ -38,6 +38,7 @@ x = y(1:col);
 if(x(1) < 0 || x(2) < 0 || x(1) > mic_positions(3, 1) || x(2) > mic_positions(3,2)
     pass = 0;
     return;
+end
 
 diff_x = x(1) - position(1,end);
 diff_y = x(2) - position(1,end);
