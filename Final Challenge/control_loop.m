@@ -3,6 +3,7 @@ function t = control_loop() %Timer functie met een acceleratie tijd en een remti
 
 global position
 global voltage
+global did_turn  % need this don't delete
 position = [0; 0; 0];%start position
 
 state = States.Straight;
