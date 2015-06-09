@@ -13,6 +13,7 @@ while(1)
     end
     if(test_count >= 5)
         voltage.done = true;
+        disp('done charging');
         break;
     end
 end
