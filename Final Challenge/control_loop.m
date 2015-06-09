@@ -3,8 +3,15 @@ function t = control_loop() %Timer functie met een acceleratie tijd en een remti
 
 global position
 global voltage
-global did_turn  % need this don't delete
-position = [0; 0; 0];%start position
+global car  % need this don't delete
+global static_positions
+global test_data
+
+static_positions.origin = [0;0;0];
+static_positions.destination = [0;0;0];
+static_positions.waypoint = [0;0;0];
+
+position = static_positions.origin;%start position
 
 state = States.VoltageMeasure;
 t = timer;
@@ -34,12 +41,14 @@ t.ExecutionMode = 'fixedRate';
             case States.Straight%Example, states and flow can be altered.
                 disp('Driving straight');
                 %Planner
-                [time, steer, speed] = planner(waypoint)
+                [car.time, car.steer, car.speed] = planner(static_positions.destination);
                 %drive car
                 state = States.Sample_straight;
                 
             case States.Corner
                 disp('Cornering')
+                drive_car(car.speed, car.steer, car.time);
+                
             case States.Sample_straight
                 disp('Sampling after straight');
                 %Sample
