@@ -42,7 +42,8 @@ t.ExecutionMode = 'fixedRate';
                 disp('Driving straight');
                 %Planner
                 [car.time, car.steer, car.speed] = planner(static_positions.destination);
-                %drive car
+                
+                drive_car(car.speed, car.steer, car.time);
                 state = States.Sample_straight;
                 
             case States.Corner
