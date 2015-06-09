@@ -6,6 +6,7 @@ global voltage
 global car  % need this don't delete
 global static_positions
 global test_data
+
 test_data.pass = 0;
 test_data.TDOA = [0;0;0;0;0;0;0;0;0;0];
 test_data.measured = zeros(1,12000,5);
@@ -80,7 +81,7 @@ t.ExecutionMode = 'fixedRate';
     end
     function timer_error
         disp('Error');
-        %drive(150, 150);
+        drive(150, 150);
     end
 end
 
