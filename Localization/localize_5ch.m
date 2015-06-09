@@ -22,7 +22,7 @@ mic1 = 1;
 mic2 = 2;
 for i = 1:elements
     for j = 1:col
-        A_matrix(i, j) = 2 * (x_matrix(mic2, j) - x_matrix(mic1, j));
+        A_matrix(i, j) = 2 * (mic_positions(mic2, j) - mic_positions(mic1, j));
     end
     A_matrix(i, col - 1 + mic2) = -2 * tdoa_matrix(i);
     b_matrix(i, 1) = tdoa_matrix(i)^2 - norm(mic_positions(mic1, 1:col))^2 + norm(mic_positions(mic2, 1:col))^2;
@@ -35,7 +35,7 @@ end
 y = pinv(A_matrix) * b_matrix;
 x = y(1:col);
 
-if(x(1) < 0 || x(2) < 0 || x(1) > mic_positions(3, 1) || x(2) > mic_positions(3,2)
+if(x(1) < 0 || x(2) < 0 || x(1) > mic_positions(3, 1) || x(2) > mic_positions(3,2))
     pass = 0;
     return;
 end
@@ -49,7 +49,8 @@ distance_traveled = norm([diff_y diff_x]);
 
 if(distance_traveled < expected_travel_distance * 1.5)
     if(abs(angle - position(3, end) < 15 + expected_angle_difference))
-        position = [position; x(1) x(2) 0];
+        vector = [x(1); x(2); 0];
+        position = [position vector];
     else
         disp('Rejected because of angle');
         pass = 0;
