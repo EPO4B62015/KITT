@@ -6,7 +6,9 @@ global voltage
 global car  % need this don't delete
 global static_positions
 global test_data
-
+test_data.pass = 0;
+test_data.TDOA = [0;0;0;0;0;0;0;0;0;0];
+test_data.measured = zeros(1,12000,5);
 static_positions.origin = [0;0;0];
 static_positions.destination = [0;0;0];
 static_positions.waypoint = [0;0;0];
@@ -55,8 +57,11 @@ t.ExecutionMode = 'fixedRate';
                 %Sample
                 %TDOA
                 TDOA_data = TDOA;
+                test_data.TDOA = [test_data.TDOA ;TDOA_data];
                 %Localize
                 pass = localize_5ch(TDOA_data, expected_distance, expected_angle);
+                test_data.pass = [test_data.pass; pass];
+                
                 EPO4figure.settKITT([position(1,end) position(2,end)]);
                 if(pass == 1)
                     state = States.Straight;
