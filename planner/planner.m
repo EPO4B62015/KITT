@@ -2,13 +2,14 @@ function [ time,steer,speed ] = planner(next_position)
 %input: position(x,y,orientation) ,next_position(x,y), 
 global car;
 global position;
+global test_data;
 speed           = 158;
 d_x             = next_position(1)-position(1,end);
 d_y             = next_position(2)-position(2,end);
 desired_theta   = atan2d(d_y,d_x);
 d_theta         = desired_theta - position(3,end);
 distance        = sqrt(d_x^2 + d_y^2);
-
+test_data.dtheta = [test_data.dtheta, d_theta]; 
 
 if car.did_turn == true
     time        = 0.5;

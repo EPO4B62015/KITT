@@ -10,6 +10,8 @@ global test_data
 test_data.pass = 0;
 test_data.TDOA = [0;0;0;0;0;0;0;0;0;0];
 test_data.measured = zeros(1,12000,5);
+test_data.dtheta = 0;
+test_data.cartime = 0;
 static_positions.origin = [0;0;0];
 static_positions.destination = [0;0;0];
 static_positions.waypoint = [0;0;0];
@@ -45,7 +47,7 @@ t.ExecutionMode = 'fixedRate';
                 disp('Driving straight');
                 %Planner
                 [car.time, car.steer, car.speed] = planner(static_positions.destination);
-                
+                test_data.cartime = [test_data.cartime, car.time];
                 drive_car(car.speed, car.steer, car.time);
                 state = States.Sample_straight;
                 
