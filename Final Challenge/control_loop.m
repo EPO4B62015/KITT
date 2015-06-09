@@ -65,7 +65,7 @@ t.ExecutionMode = 'fixedRate';
                 pass = localize_5ch(TDOA_data, expected_distance, expected_angle);
                 test_data.pass = [test_data.pass; pass];
                 
-                EPO4figure.settKITT([position(1,end) position(2,end)]); %Update car position
+                EPO4figure.setKITT([position(1,end) position(2,end)]); %Update car position
                 if(pass == 1)
                     state = States.Straight;
                 else
