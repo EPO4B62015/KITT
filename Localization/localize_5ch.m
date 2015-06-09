@@ -1,7 +1,8 @@
 function pass = localize_5ch(tdoa_matrix, expected_travel_distance, expected_angle_difference)
 %Checking if calculations are possible
 global position;
-mic_positions = [0 0 30; 413 0 30; 413 210 30; 0 210 30; 173 0 77];
+global static_positions;
+mic_positions = static_positions.mic_positions;
 row = 5;
 col = 3;
 elements = (row * (row - 1))/2;
