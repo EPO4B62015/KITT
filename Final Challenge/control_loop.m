@@ -6,7 +6,7 @@ global voltage
 global did_turn  % need this don't delete
 position = [0; 0; 0];%start position
 
-state = States.Straight;
+state = States.VoltageMeasure;
 t = timer;
 t.TimerFcn = @timer_loop;
 t.StartFcn = @timer_startFcn;
@@ -19,6 +19,7 @@ t.ExecutionMode = 'fixedRate';
 
     function timer_startFcn(timerObj, timerEvent)
         disp('Started');
+        EPO4figure; %Load the figure
     end
 
 
@@ -33,18 +34,20 @@ t.ExecutionMode = 'fixedRate';
             case States.Straight%Example, states and flow can be altered.
                 disp('Driving straight');
                 %Planner
+                [time, steer, speed] = planner(waypoint)
                 %drive car
                 state = States.Sample_straight;
                 
             case States.Corner
                 disp('Cornering')
             case States.Sample_straight
-                disp('Sampleing after straight');
+                disp('Sampling after straight');
                 %Sample
                 %TDOA
                 TDOA_data = TDOA;
                 %Localize
-                pass = localize_5ch(TDOA_data);
+                pass = localize_5ch(TDOA_data, expected_distance, expected_angle);
+                EPO4figure.settKITT([position(1,end) position(2,end)]);
                 if(pass == 1)
                     state = States.Straight;
                 else
@@ -52,7 +55,7 @@ t.ExecutionMode = 'fixedRate';
                 end
                 
             case States.Sample_corner
-                disp('Sampleing after corner');
+                disp('Sampling after corner');
         end
     end
 
