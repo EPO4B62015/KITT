@@ -16,6 +16,7 @@ static_positions.origin = [0;0;0];
 static_positions.destination = [0;0;0];
 static_positions.waypoint = [0;0;0];
 static_positions.mic_positions = [0 0 30; 413 0 30; 413 210 30; 0 210 30; 173 0 77];
+
 position = static_positions.origin;%start position
 
 state = States.VoltageMeasure;
@@ -62,7 +63,7 @@ t.ExecutionMode = 'fixedRate';
                 TDOA_data = TDOA;
                 test_data.TDOA = [test_data.TDOA ;TDOA_data];
                 %Localize
-                pass = localize_5ch(TDOA_data, expected_distance, expected_angle);
+                pass = localize_5ch(TDOA_data, 800, 180);
                 test_data.pass = [test_data.pass; pass];
                 
                 EPO4figure.setKITT([position(1,end) position(2,end)]); %Update car position
