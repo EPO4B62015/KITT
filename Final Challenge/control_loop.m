@@ -44,7 +44,7 @@ t.ExecutionMode = 'fixedRate';
                 if(voltage.done == true)
                     state = States.Straight;
                 end
-            case States.Straight%Example, states and flow can be altered.
+            case States.Drive%Example, states and flow can be altered.
                 disp('Driving straight');
                 %Planner
                 [car.time, car.steer, car.speed] = planner(static_positions.destination);
@@ -52,29 +52,27 @@ t.ExecutionMode = 'fixedRate';
                 drive_car(car.speed, car.steer, car.time);
                 state = States.Sample_straight;
                 
-            case States.Corner
-                disp('Cornering')
-                drive_car(car.speed, car.steer, car.time);
-                
-            case States.Sample_straight
+            case States.Sample
                 disp('Sampling after straight');
                 %Sample
                 %TDOA
                 TDOA_data = TDOA;
                 test_data.TDOA = [test_data.TDOA ;TDOA_data];
                 %Localize
-                pass = localize_5ch(TDOA_data, 800, 180);
-                test_data.pass = [test_data.pass; pass];
-                
+                if(car.did_turn == true)
+                    pass = localize_5ch(TDOA_data, 800, 0);
+                    test_data.pass = [test_data.pass; pass];
+                else
+                    pass = localize_5ch(TDOA_data, 800, 90);
+                    test_data.pass = [test_data.pass; pass];
+                end
                 EPO4figure.setKITT([position(1,end) position(2,end)]); %Update car position
                 if(pass == 1)
-                    state = States.Straight;
+                    state = States.Drive;
                 else
-                    state = States.Sample_straight;
+                    state = States.Sample;
                 end
-                
-            case States.Sample_corner
-                disp('Sampling after corner');
+             
         end
     end
 

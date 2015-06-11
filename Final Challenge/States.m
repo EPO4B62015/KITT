@@ -1,5 +1,5 @@
 classdef States
    enumeration
-      VoltageMeasure, Straight, Corner, Sample_straight, Sample_corner
+      VoltageMeasure, Drive, Sample
    end
 end
