@@ -14,12 +14,12 @@ test_data.TDOA = [0;0;0;0;0;0;0;0;0;0];
 test_data.measured = zeros(1,12000,5);
 test_data.dtheta = 0;
 test_data.cartime = 0;
-static_positions.origin = [0;0;0];
+static_positions.origin = [0;0;0]; %start position
 static_positions.destination = [0;0;0];
 static_positions.waypoint = [0;0;0];
 static_positions.mic_positions = [0 0 30; 413 0 30; 413 210 30; 0 210 30; 173 0 77];
 
-position = static_positions.origin;%start position
+position = static_positions.origin; %Postion in centimeters
 
 state = States.VoltageMeasure;
 t = timer;
@@ -33,8 +33,13 @@ t.ExecutionMode = 'fixedRate';
 
 
     function timer_startFcn(timerObj, timerEvent)
-        disp('Started');
+        disp('Started - Load figure');
         EPO4figure; %Load the figure
+        EPO4figure.setMicLoc(static_positions.mic_position/100) %Update Mic Positions
+        EPO4figure.setDestination(static_positions.destination/100);
+        
+        %EPO4figure.setWayPoint(static_positions.waypoint/100); %Only add
+        %to map if there is a waypoint
     end
 
 
@@ -46,7 +51,7 @@ t.ExecutionMode = 'fixedRate';
                 if(voltage.done == true)
                     state = States.Straight;
                 end
-            case States.Drive%Example, states and flow can be altered.
+            case States.Drive %Example, states and flow can be altered.
                 disp('Driving straight');
                 %Status request
                 %Planner
@@ -69,13 +74,13 @@ t.ExecutionMode = 'fixedRate';
                     pass = localize_5ch(TDOA_data, 50, 0);%Misschien de expected distance nog aanpassen
                     test_data.pass = [test_data.pass; pass];
                 end
-                EPO4figure.setKITT([position(1,end) position(2,end)]); %Update car position
+                
                 if(pass == 1)
+                    EPO4figure.setKITT([position(1,end)/100 position(2,end)/100]); %Update car position
                     state = States.Drive;
                 else
                     state = States.Sample;
                 end
-             
         end
     end
 
