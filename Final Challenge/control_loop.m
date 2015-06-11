@@ -33,8 +33,13 @@ t.ExecutionMode = 'fixedRate';
 
 
     function timer_startFcn(timerObj, timerEvent)
-        disp('Started');
+        disp('Started - Load figure');
         EPO4figure; %Load the figure
+        EPO4figure.setMicLoc(static_positions.mic_position/100) %Update Mic Positions
+        EPO4figure.setDestination(static_positions.destination/100);
+        
+        %EPO4figure.setWayPoint(static_positions.waypoint/100); %Only add
+        %to map if there is a waypoint
     end
 
 
@@ -68,13 +73,13 @@ t.ExecutionMode = 'fixedRate';
                     pass = localize_5ch(TDOA_data, 200, car.d_theta);
                     test_data.pass = [test_data.pass; pass];
                 end
-                EPO4figure.setKITT([position(1,end)/100 position(2,end)/100]); %Update car position
+                
                 if(pass == 1)
+                    EPO4figure.setKITT([position(1,end)/100 position(2,end)/100]); %Update car position
                     state = States.Drive;
                 else
                     state = States.Sample;
                 end
-                
         end
     end
 
