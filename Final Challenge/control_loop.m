@@ -14,12 +14,12 @@ test_data.TDOA = [0;0;0;0;0;0;0;0;0;0];
 test_data.measured = zeros(1,12000,5);
 test_data.dtheta = 0;
 test_data.cartime = 0;
-static_positions.origin = [0;0;0];
+static_positions.origin = [0;0;0]; %start position
 static_positions.destination = [0;0;0];
 static_positions.waypoint = [0;0;0];
 static_positions.mic_positions = [0 0 30; 413 0 30; 413 210 30; 0 210 30; 173 0 77];
 
-position = static_positions.origin;%start position
+position = static_positions.origin; %Postion in centimeters
 
 state = States.VoltageMeasure;
 t = timer;
@@ -46,7 +46,7 @@ t.ExecutionMode = 'fixedRate';
                 if(voltage.done == true)
                     state = States.Straight;
                 end
-            case States.Drive%Example, states and flow can be altered.
+            case States.Drive %Example, states and flow can be altered.
                 disp('Driving straight');
                 %Planner
                 [car.time, car.steer, car.speed] = planner(static_positions.destination);
@@ -68,13 +68,13 @@ t.ExecutionMode = 'fixedRate';
                     pass = localize_5ch(TDOA_data, 200, car.d_theta);
                     test_data.pass = [test_data.pass; pass];
                 end
-                EPO4figure.setKITT([position(1,end) position(2,end)]); %Update car position
+                EPO4figure.setKITT([position(1,end)/100 position(2,end)/100]); %Update car position
                 if(pass == 1)
                     state = States.Drive;
                 else
                     state = States.Sample;
                 end
-             
+                
         end
     end
 
