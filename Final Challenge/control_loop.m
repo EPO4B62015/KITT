@@ -48,6 +48,7 @@ t.ExecutionMode = 'fixedRate';
                 end
             case States.Drive%Example, states and flow can be altered.
                 disp('Driving straight');
+                %Status request
                 %Planner
                 [car.time, car.steer, car.speed] = planner(static_positions.destination);
                 test_data.cartime = [test_data.cartime, car.time];
@@ -62,10 +63,10 @@ t.ExecutionMode = 'fixedRate';
                 test_data.TDOA = [test_data.TDOA ;TDOA_data];
                 %Localize
                 if(car.did_turn == true)
-                    pass = localize_5ch(TDOA_data, 800, 0);
+                    pass = localize_5ch(TDOA_data, 200, car.d_theta);
                     test_data.pass = [test_data.pass; pass];
                 else
-                    pass = localize_5ch(TDOA_data, 200, car.d_theta);
+                    pass = localize_5ch(TDOA_data, 50, 0);%Misschien de expected distance nog aanpassen
                     test_data.pass = [test_data.pass; pass];
                 end
                 EPO4figure.setKITT([position(1,end) position(2,end)]); %Update car position
