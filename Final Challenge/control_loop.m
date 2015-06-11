@@ -7,6 +7,8 @@ global car  % need this don't delete
 global static_positions
 global test_data
 
+pass_factor = 0;
+
 test_data.pass = 0;
 test_data.TDOA = [0;0;0;0;0;0;0;0;0;0];
 test_data.measured = zeros(1,12000,5);
@@ -63,7 +65,7 @@ t.ExecutionMode = 'fixedRate';
                     pass = localize_5ch(TDOA_data, 800, 0);
                     test_data.pass = [test_data.pass; pass];
                 else
-                    pass = localize_5ch(TDOA_data, 800, 90);
+                    pass = localize_5ch(TDOA_data, 200, car.d_theta);
                     test_data.pass = [test_data.pass; pass];
                 end
                 EPO4figure.setKITT([position(1,end) position(2,end)]); %Update car position
