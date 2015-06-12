@@ -69,9 +69,11 @@ t.ExecutionMode = 'fixedRate';
                 %Localize
                 if(car.did_turn == true)
                     pass = localize_5ch(TDOA_data, 200, car.d_theta);
+                    Orientation;
                     test_data.pass = [test_data.pass; pass];
                 else
                     pass = localize_5ch(TDOA_data, 50, 0);%Misschien de expected distance nog aanpassen
+                    Orientation
                     test_data.pass = [test_data.pass; pass];
                 end
                 
