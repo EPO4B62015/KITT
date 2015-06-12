@@ -7,7 +7,7 @@ global car  % need this don't delete
 global static_positions
 global test_data
 
-pass_factor = 0;
+fail_factor = 0;
 
 test_data.pass = 0;
 test_data.TDOA = [0;0;0;0;0;0;0;0;0;0];
@@ -53,6 +53,7 @@ t.ExecutionMode = 'fixedRate';
                 end
             case States.Drive %Example, states and flow can be altered.
                 disp('Driving straight');
+                fail_factor = 0;
                 %Status request
                 %Planner
                 [car.time, car.steer, car.speed] = planner(static_positions.destination);
@@ -82,6 +83,10 @@ t.ExecutionMode = 'fixedRate';
                     state = States.Drive;
                 else
                     state = States.Sample;
+                    fail_factor = fail_factor + 1;
+                    if(fail_factor > 3)
+                        drive_car(car.speed, car.steer, 0.2);
+                    end
                 end
         end
     end
