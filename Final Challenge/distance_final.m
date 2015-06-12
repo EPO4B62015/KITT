@@ -6,7 +6,7 @@ function [ peak_position ] = distance_final(loc_peak1, h2)
 %peak_location = sort(peak_location(1:7),'ascend')
 %peak_position = peak_location(2);
 
-Ts = 800; %Search window
+Ts = 1200; %Search window
 % 
  %plot(h2)
  %title('h2')

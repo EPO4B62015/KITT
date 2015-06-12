@@ -1,7 +1,7 @@
 %TEST 
 function [location_peak1] = loc_peak_1_final(h1)
 
-Ts = 800; %Search window
+Ts = 1200; %Search window
 
 %Determine the location of the largest peak after a silence period
 [peaks_f, locations_f] = findpeaks(h1(Ts:end), 'MinPeakDistance', 6000);
