@@ -6,10 +6,10 @@ global voltage
 global car  % need this don't delete
 global static_positions
 global test_data
-global i_measured
 
 fail_factor = 0;
-i_measured = 1;
+drive_counter = 0;
+
 test_data.pass = 0;
 test_data.TDOA = [0;0;0;0;0;0;0;0;0;0];
 test_data.measured = zeros(1,12000,5);
@@ -57,6 +57,7 @@ t.ExecutionMode = 'fixedRate';
             case States.Drive %Example, states and flow can be altered.
                 disp('Driving straight');
                 fail_factor = 0;
+                drive_counter = 0;
                 %Status request
                 %Planner
                 [car.time, car.steer, car.speed] = planner(static_positions.destination);
@@ -76,7 +77,7 @@ t.ExecutionMode = 'fixedRate';
                     
                     test_data.pass = [test_data.pass; pass];
                 else
-                    pass = localize_5ch(TDOA_data, 50, 0);%Misschien de expected distance nog aanpassen
+                    pass = localize_5ch(TDOA_data, 100 + 12*drive_counter, 0);%Misschien de expected distance nog aanpassen
                     
                     test_data.pass = [test_data.pass; pass];
                 end
@@ -90,6 +91,7 @@ t.ExecutionMode = 'fixedRate';
                     fail_factor = fail_factor + 1;
                     if(fail_factor > 3)
                         drive_car(car.speed, car.steer, 0.2);
+                        drive_counter = drive_counter + 1;
                     end
                 end
         end
