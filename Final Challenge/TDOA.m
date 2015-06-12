@@ -5,7 +5,6 @@ global test_data
 global i_measured
 Fs = 48000;
 Trec = 0.25;
-i_measured = 1;
 measured_data = pa_wavrecord(3, 7, Fs*Trec, Fs, 'asio');
 testdata(i_measured,:,:) = measured_data;
 test_data.measured = testdata;

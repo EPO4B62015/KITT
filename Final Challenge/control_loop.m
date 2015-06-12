@@ -6,9 +6,10 @@ global voltage
 global car  % need this don't delete
 global static_positions
 global test_data
+global i_measured
 
 fail_factor = 0;
-
+i_measured = 1;
 test_data.pass = 0;
 test_data.TDOA = [0;0;0;0;0;0;0;0;0;0];
 test_data.measured = zeros(1,12000,5);
