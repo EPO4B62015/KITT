@@ -1,7 +1,9 @@
 function pass = localize_5ch(tdoa_matrix, expected_travel_distance, expected_angle_difference)
 %Checking if calculations are possible
+disp('Start localize');
 global position;
 global static_positions;
+global test_data;
 mic_positions = static_positions.mic_positions;% [0 0 30; 413 0 30; 413 210 30; 0 210 30; 173 0 77];
 row = 5;
 col = 3;
@@ -35,19 +37,19 @@ for i = 1:elements
 end
 y = pinv(A_matrix) * b_matrix;
 x = y(1:col);
-
+test_data.pos_tdoa = [test_data.pos_tdoa, x];
 if(x(1) < 0 || x(2) < 0 || x(1) > mic_positions(3, 1) || x(2) > mic_positions(3,2))
     pass = 0;
     return;
 end
-
+disp('Check 2');
 diff_x = x(1) - position(1,end);
-diff_y = x(2) - position(1,end);
+diff_y = x(2) - position(2,end);
 angle = atan2d(diff_y, diff_x);
 distance_traveled = norm([diff_y diff_x]);
 %Angle calculated. What to reject and what to do when rejected?
 
-
+disp('Check 1')
 if(distance_traveled < expected_travel_distance * 1.5)
     if(abs(angle - position(3, end) < 15 + expected_angle_difference))
         vector = [x(1); x(2); 0];
@@ -60,5 +62,5 @@ else
     disp('Rejected because of travel distance');
     pass = 0;
 end
-
+disp('Einde localize');
 end

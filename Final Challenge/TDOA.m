@@ -2,6 +2,7 @@ function [ TDOA_data ] = TDOA
 %TDOA Summary of this function goes here
 %   TDOA runs the tdoa and returns a column with distances differences
 global test_data
+global i_measured
 Fs = 48000;
 Trec = 0.25;
 i_measured = 1;

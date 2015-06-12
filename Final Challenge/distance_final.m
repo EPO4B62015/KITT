@@ -26,7 +26,7 @@ else
     start = loc_peak_2_f - Ts;
 end
 
-[peaks_2,locations_2] = findpeaks(h2(start:loc_peak_2_f), 'MinPeakHeight',0.75*peaks_2_f(1));
+[peaks_2,locations_2] = findpeaks(h2(start:loc_peak_2_f), 'MinPeakHeight',0.99*peaks_2_f(1));
 %locations_2
 
 
