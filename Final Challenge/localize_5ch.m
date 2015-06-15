@@ -56,8 +56,18 @@ distance_traveled = norm([diff_y diff_x]);
 %Angle calculated. What to reject and what to do when rejected?
 
 disp('Check 1')
+if(car.did_turn == true)
+    %if(abs(angle - position(3, end) < 15 + expected_angle_difference))
+        vector = [x(1); x(2); 0];
+        position = [position vector];
+    %else
+    %    disp('Rejected because of angle');
+    %    pass = 4;
+    %end
+    return
+end
 if(distance_traveled < expected_travel_distance * 1.5)
-    if(abs(angle - position(3, end) < 15 + expected_angle_difference))
+    if(abs(angle - position(3, end) < 15))
         vector = [x(1); x(2); 0];
         position = [position vector];
     else

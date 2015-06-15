@@ -73,16 +73,9 @@ t.ExecutionMode = 'fixedRate';
                 disp('TDOA afgerond');
                 test_data.TDOA = [test_data.TDOA ,TDOA_data];
                 %Localize
-                if(car.did_turn == true)
-                    pass = localize_5ch(TDOA_data, 200, car.d_theta);
-                    
-                    test_data.pass = [test_data.pass; pass];
-                else
-
-                    pass = localize_5ch(TDOA_data, 100 + 12*drive_counter, 0);%Maybe expected distance variable.
-                    
-                    test_data.pass = [test_data.pass; pass];
-                end
+                
+                pass = localize_5ch(TDOA_data, 100, car.d_theta);
+                test_data.pass = [test_data.pass; pass];
                 
                 if(pass == 1)
                     EPO4figure.setKITT([position(1,end)/100 position(2,end)/100]); %Update car position
