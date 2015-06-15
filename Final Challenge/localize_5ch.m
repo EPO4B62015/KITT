@@ -37,7 +37,7 @@ for i = 1:elements
 end
 y = pinv(A_matrix) * b_matrix;
 x = y(1:col)
-%test_data.pos_tdoa = [test_data.pos_tdoa, x];
+test_data.pos_tdoa = [test_data.pos_tdoa, x];
 if(x(1) < 0 || x(2) < 0 || x(1) > mic_positions(3, 1) || x(2) > mic_positions(3,2))
     pass = 0;
     return;
