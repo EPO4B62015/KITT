@@ -4,7 +4,13 @@ global car;
 global position;
 global test_data;
 global voltage;
-speed            = 158;
+if voltage.value >= 17
+    speed  = 158;
+elseif voltage.value >= 14
+    speed = 162;
+else
+    speed = 165;
+end
 d_x              = next_position(1)-position(1,end);
 d_y              = next_position(2)-position(2,end);
 desired_theta    = atan2d(d_y,d_x);
