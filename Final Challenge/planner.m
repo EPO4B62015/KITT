@@ -3,10 +3,9 @@ function [time,steer,speed] = planner(next_position)
 global car;
 global position;
 global test_data;
-global voltage;
-if voltage.value >= 17
+if car.voltage >= 17
     speed  = 158;
-elseif voltage.value >= 14
+elseif car.voltage >= 14
     speed = 162;
 else
     speed = 165;
@@ -17,9 +16,9 @@ desired_theta    = atan2d(d_y,d_x);
 car.d_theta      = desired_theta - position(3,end);
 distance         = sqrt(d_x^2 + d_y^2);
 test_data.dtheta = [test_data.dtheta, car.d_theta]; 
-voltage.factor = voltage.value / voltage.value; %temporary always 1
+car.v_factor = car.voltage / car.voltage; %temporary always 1
 if car.did_turn == true
-    time         = 0.5 / voltage.factor;
+    time         = 0.5 / car.v_factor;
     steer        = 153;
     car.did_turn = false;
 else
@@ -28,7 +27,7 @@ else
             time    = straight(distance);
             steer   = 153;
         else                %distance is greater than 1.5m
-            time    = 1 / voltage.factor;    % return a 1s drive
+            time    = 1 / car.v_factor;    % return a 1s drive
             steer   = 153;  % straight
         end
     else                    % turn
