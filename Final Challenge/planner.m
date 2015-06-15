@@ -11,7 +11,7 @@ desired_theta    = atan2d(d_y,d_x);
 car.d_theta      = desired_theta - position(3,end);
 distance         = sqrt(d_x^2 + d_y^2);
 test_data.dtheta = [test_data.dtheta, car.d_theta]; 
-voltage.factor = voltage.value / 17;
+voltage.factor = voltage.value / voltage.value; %temporary always 1
 if car.did_turn == true
     time         = 0.5 / voltage.factor;
     steer        = 153;
