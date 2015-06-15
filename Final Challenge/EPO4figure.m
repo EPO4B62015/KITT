@@ -27,7 +27,7 @@ classdef EPO4figure
             xlabel('X coordinate (m)');
             ylabel('Y coordinate (m)');
             zlabel('Z coordinate (m)');
-            axis([-1 5 -1 3]); %The size of the axis
+            axis([-1 7 -1 7]); %The size of the axis
             hold on;
             grid on
             set(gca, 'GridLineStyle', '-');
