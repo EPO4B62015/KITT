@@ -18,6 +18,8 @@ test_data.pos_tdoa = [0;0;0];
 static_positions.origin = [112;8;90]; %start position
 static_positions.destination = [500;50;0];
 static_positions.waypoint = [0;0;0];
+static_positions.point = 1; % need this in planner 
+static_positions.route = [static_positions.waypoint,static_positions.destination];
 static_positions.mic_positions = [0 0 30; 600 0 30; 600 600 30; 0 600 30; 300 0 77];
 
 car.did_turn = false;
