@@ -17,7 +17,7 @@ test_data.dtheta = 0;
 test_data.cartime = 0;
 test_data.pos_tdoa = [0;0;0];
 static_positions.origin = [112;8;90]; %start position
-static_positions.destination = [112;400;0];
+static_positions.destination = [500;50;0];
 static_positions.waypoint = [0;0;0];
 static_positions.mic_positions = [0 0 30; 600 0 30; 600 600 30; 0 600 30; 300 0 77];
 
@@ -70,6 +70,7 @@ t.ExecutionMode = 'fixedRate';
                 %Sample
                 %TDOA
                 TDOA_data = TDOA;
+                disp('TDOA afgerond');
                 test_data.TDOA = [test_data.TDOA ,TDOA_data];
                 %Localize
                 if(car.did_turn == true)
@@ -90,7 +91,7 @@ t.ExecutionMode = 'fixedRate';
                     state = States.Sample;
                     fail_factor = fail_factor + 1;
                     if(fail_factor > 3)
-                        drive_car(car.speed, car.steer, 0.2);
+                        drive_car(car.speed, 153, 0.2);
                         drive_counter = drive_counter + 1;
                     end
                 end
