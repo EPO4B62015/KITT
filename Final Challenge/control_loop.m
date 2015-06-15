@@ -1,4 +1,3 @@
-%Challenge 5 meter
 function t = control_loop() %Timer functie met een acceleratie tijd en een remtijd
 
 global position
@@ -7,7 +6,7 @@ global car  % need this don't delete
 global static_positions
 global test_data
 
-pass_factor = 0;
+fail_counter = 0;
 
 test_data.pass = 0;
 test_data.TDOA = [0;0;0;0;0;0;0;0;0;0];
@@ -53,7 +52,9 @@ t.ExecutionMode = 'fixedRate';
                 end
             case States.Drive %Example, states and flow can be altered.
                 disp('Driving straight');
+                fail_counter = 0;
                 %Status request
+                status_update;
                 %Planner
                 [car.time, car.steer, car.speed] = planner(static_positions.destination);
                 test_data.cartime = [test_data.cartime, car.time];
@@ -71,7 +72,7 @@ t.ExecutionMode = 'fixedRate';
                     pass = localize_5ch(TDOA_data, 200, car.d_theta);
                     test_data.pass = [test_data.pass; pass];
                 else
-                    pass = localize_5ch(TDOA_data, 50, 0);%Misschien de expected distance nog aanpassen
+                    pass = localize_5ch(TDOA_data, 50, 0);%Maybe expected distance variable.
                     test_data.pass = [test_data.pass; pass];
                 end
                 
@@ -80,6 +81,10 @@ t.ExecutionMode = 'fixedRate';
                     state = States.Drive;
                 else
                     state = States.Sample;
+                    fail_counter = fail_counter + 1;
+                    if(fail_counter > 3)
+                        drive_car(car.speed, car.steer, 0.2);%Debate if good solution and good values.
+                    end
                 end
         end
     end
