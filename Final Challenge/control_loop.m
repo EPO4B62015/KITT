@@ -121,7 +121,6 @@ t.ExecutionMode = 'fixedRate';
                                     error('Car outside microphone range');
                                 case 3
                                     drive_counter = 100;
-                                    
                                 case 4
                                     car.did_turn = true;
                                     pass = localize_5ch(TDOA_data, 1000);
@@ -137,8 +136,12 @@ t.ExecutionMode = 'fixedRate';
                                     end
                                 case 6
                                     localize_5ch(TDOA_data, 1000);
+                                    state = States.Drive;
+                                    Orientation; %function without nonglobal arguments
                                 case 7
                                     localize_5ch(TDOA_data, 1000);
+                                    state = States.Drive;
+                                    Orientation; %function without nonglobal arguments
                             end
                         else
                             drive_car(car.speed, car.steer_straight, 0.2);
