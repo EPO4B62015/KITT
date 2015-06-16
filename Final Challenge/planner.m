@@ -21,7 +21,7 @@ test_data.dtheta = [test_data.dtheta, car.d_theta];
 car.v_factor = car.voltage / car.voltage; %temporary always 1
 if distance <= 0.3
     time = 3; % for 3 seconds
-    steer = 153;
+    steer = 150;
     speed = 150; %standing still
     if static_positions.point >= numberofpoints
         %WERETHERE_playsound or something
@@ -31,16 +31,16 @@ if distance <= 0.3
 else
     if car.did_turn == true
         time         = 0.5 / car.v_factor;
-        steer        = 153;
+        steer        = 150;
         car.did_turn = false;
     else
         if abs(car.d_theta) <= 10    %straigth
             if distance <= 1.5;
                 time    = straight(distance);
-                steer   = 153;
+                steer   = 150;
             else                %distance is greater than 1.5m
                 time    = 1 / car.v_factor;    % return a 1s drive
-                steer   = 153;  % straight
+                steer   = 150;  % straight
             end
         else                    % turn
             %car.d_theta    = roundn(car.d_theta,1.5); % round up or down to nearest 15 degrees.
