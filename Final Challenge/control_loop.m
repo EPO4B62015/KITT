@@ -8,18 +8,20 @@ global test_data
 
 fail_factor = 0;
 drive_counter = 0;
-z_filter_counter = 0;
+z_counter = 0;
 
 test_data.pass = 0;
 test_data.TDOA = [0;0;0;0;0;0;0;0;0;0];
 test_data.measured = zeros(1,12000,5);
 test_data.dtheta = 0;
-test_data.cartime = [0 0 0]; 
+test_data.cartime = [0 0 0];
 test_data.pos_tdoa = [0;0;0];
-static_positions.origin = [445;15;90]; %start position
-static_positions.destination = [0;500;0];
-static_positions.waypoint = [0;0;0];
-static_positions.point = 1; % need this in planner 
+static_positions.origin = [1;1;90]; %start position
+static_positions.destination = [1;1;0];
+static_positions.waypoint = [1;1;0];
+static_positions.point = 1; % need this in planner
+[sound, Fs] = audioread('ObjectiveComplete.mp3');
+player = audioplayer(sound,Fs);
 if static_positions.waypoint == [0;0;0]
     static_positions.route = [static_positions.destination];
 else
@@ -29,6 +31,7 @@ static_positions.mic_positions = [0 0 30; 600 0 30; 600 600 30; 0 600 30; 300 0 
 
 car.did_turn = false;
 car.did_last_turn = false;
+car.steer_straight = 150;
 position = static_positions.origin; %Postion in centimeters
 
 state = States.VoltageMeasure;
@@ -51,7 +54,7 @@ t.ExecutionMode = 'fixedRate';
         if static_positions.waypoint == [0;0;0]
             disp('No waypoint');
         else
-        EPO4figure.setWayPoint(static_positions.waypoint/100); 
+            EPO4figure.setWayPoint(static_positions.waypoint/100);
         end;
     end
 
@@ -73,6 +76,16 @@ t.ExecutionMode = 'fixedRate';
                 %Planner
                 [car.time, car.steer, car.speed] = planner;
                 test_data.cartime = [test_data.cartime, car.time];
+                if(car.status == 1)
+                    %Car is at waypoint
+                    play(player)
+                elseif(car.status == 2)
+                    %Car is at destination
+                    play(player)
+                    disp('At destination!')
+                    
+                end
+                
                 drive_car(car.speed, car.steer, car.time);
                 state = States.Sample;
                 
@@ -84,8 +97,8 @@ t.ExecutionMode = 'fixedRate';
                 disp('TDOA afgerond');
                 test_data.TDOA = [test_data.TDOA ,TDOA_data];
                 %Localize
-                
-                pass = localize_5ch(TDOA_data, 100 * car.time + 12 * drive_counter, car.d_theta);
+                pass = localize_5ch(TDOA_data, (100 * car.time) + (12 * drive_counter));
+                %pass = 1;
                 test_data.pass = [test_data.pass; pass];
                 
                 if(pass == 1)
@@ -95,13 +108,46 @@ t.ExecutionMode = 'fixedRate';
                 else
                     state = States.Sample;
                     fail_factor = fail_factor + 1;
-                    if(fail_factor > 3)
-                        drive_car(car.speed, 153, 0.2);
+                    if(fail_factor >= 3)
                         drive_counter = drive_counter + 1;
+                        fail_factor = 0;
+                        if(drive_counter >= 3)
+                            
+                            switch(pass)
+                                case 2
+                                    %This will hopefully never happen. In
+                                    %this case just trow an error. Maybe
+                                    %later drive backwards and reset position?
+                                    error('Car outside microphone range');
+                                case 3
+                                    drive_counter = 100;
+                                    
+                                case 4
+                                    car.did_turn = true;
+                                    pass = localize_5ch(TDOA_data, 1000);
+                                    %This will reevaluate its
+                                    %orientation and position
+                                    if(pass ~= 1)
+                                        error('Could not reevaluate position. Something funny is going on.');
+                                    end
+                                case 5
+                                    z_counter = z_counter + 1;
+                                    if(z_counter > 3)
+                                        error('Z_counter is too large. Something funny is going on.');
+                                    end
+                                case 6
+                                    localize_5ch(TDOA_data, 1000);
+                                case 7
+                                    localize_5ch(TDOA_data, 1000);
+                            end
+                        else
+                            drive_car(car.speed, car.steer_straight, 0.2);
+                        end
                     end
                 end
         end
     end
+
 
     function timer_stopFcn(timerObj, timerEvent)
         disp('Timer is gestopt');
@@ -112,4 +158,5 @@ t.ExecutionMode = 'fixedRate';
         drive(150, 150);
     end
 end
+
 

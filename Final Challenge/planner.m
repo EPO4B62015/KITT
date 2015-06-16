@@ -25,7 +25,7 @@ distance         = sqrt(d_x^2 + d_y^2);
 test_data.dtheta = [test_data.dtheta, car.d_theta];
 car.v_factor = 1; %car.voltage / car.voltage; %temporary always 1
 if distance <= 0.3
-    steer = 150;
+    steer = car.steer_straight;
     speed = 150; %standing still
     
     if static_positions.point >= numberofpoints
@@ -42,7 +42,7 @@ else
     car.status = 0;
     if car.did_turn == true
         time         = 0.5 / car.v_factor;
-        steer        = 150;
+        steer        = car.steer_straight;
         car.did_turn = false;
         car.did_last_turn = true;
         disp('Driving straight a bit to provide data for orientation after we made a turn.')
@@ -53,11 +53,11 @@ else
             disp('No turn!');
             if distance <= 1.5;
                 time    = straight(distance);
-                steer   = 150;
+                steer   = car.steer_straight;
                 disp('Almost there, careful now, we got one shot (nope, just kidding).')
             else                %distance is greater than 1.5m
                 time    = 1.5 / car.v_factor;    % return a 1s drive
-                steer   = 150;  % straight
+                steer   = car.steer_straight;  % straight
                 disp('Lets drive in a straight line for a bit and check again later.')
             end
         else                    % turn
@@ -68,7 +68,7 @@ else
                 steer = 100;
                 disp('to the right!')
             else
-                steer = 197;
+                steer = 200;
                 disp('to the left!')
             end
             time = turn(car.d_theta);
