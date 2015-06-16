@@ -10,6 +10,7 @@ disp('Start localize');
 global position;
 global static_positions;
 global test_data;
+global car;
 mic_positions = static_positions.mic_positions;% [0 0 30; 413 0 30; 413 210 30; 0 210 30; 173 0 77];
 row = 5;
 col = 3;
