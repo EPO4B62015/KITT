@@ -71,7 +71,7 @@ t.ExecutionMode = 'fixedRate';
                 %Status request
                 status_update;
                 %Planner
-                [car.time, car.steer, car.speed] = planner(static_positions.destination);
+                [car.time, car.steer, car.speed] = planner;
                 test_data.cartime = [test_data.cartime, car.time];
                 drive_car(car.speed, car.steer, car.time);
                 state = States.Sample;

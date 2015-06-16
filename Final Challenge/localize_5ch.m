@@ -1,4 +1,4 @@
-function pass = localize_5ch(tdoa_matrix, expected_travel_distance, expected_angle_difference)
+function pass = localize_5ch(tdoa_matrix, expected_travel_distance)
 %Checking if calculations are possible
 %Pass codes
 %   0 = Multiple elements are smaller than 5.
@@ -8,6 +8,7 @@ function pass = localize_5ch(tdoa_matrix, expected_travel_distance, expected_ang
 %   4 = Rejected because of angle
 %   5 = Rejected because z too large
 %   6 = Rejected because of travel distance while turning
+%   7 = Rejected because of travel distance while going straight after turn
 disp('Start localize');
 global position;
 global static_positions;
@@ -56,6 +57,7 @@ end
 if(x(3) > 20 && x(3) < 32)
     vector = [x(1); x(2); 0];
     position = [position vector];
+    return;
 end
 
 
@@ -64,20 +66,20 @@ if(x(1) < -100 || x(2) < -100 || x(1) > mic_positions(3, 1)+100 || x(2) > mic_po
     return;
 end
 
-disp('Check 2');
+disp('Check 1');
 diff_x = x(1) - position(1,end);
 diff_y = x(2) - position(2,end);
 angle = atan2d(diff_y, diff_x);
 distance_traveled = norm([diff_y diff_x]);
 %Angle calculated. What to reject and what to do when rejected?
 
-disp('Check 1')
+disp('Check 2')
 if(car.did_turn == true)
     if(distance_traveled < expected_travel_distance * 1.5)
         vector = [x(1); x(2); 0];
         position = [position vector];
     else
-       disp('Rejected because of travel distance');
+       disp('Rejected because of travel distance while turning');
        pass = 6;
     end
     return
@@ -86,7 +88,7 @@ elseif(car.did_last_turn == true)
         vector = [x(1); x(2); 0];
         position = [position vector];
     else
-       disp('Rejected because of travel distance');
+       disp('Rejected because of travel distance while driving after turning');
        pass = 7;
     end
     return
