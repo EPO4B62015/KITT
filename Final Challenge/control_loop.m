@@ -19,7 +19,11 @@ static_positions.origin = [112;8;90]; %start position
 static_positions.destination = [500;50;0];
 static_positions.waypoint = [0;0;0];
 static_positions.point = 1; % need this in planner 
-static_positions.route = [static_positions.destination];
+if static_positions.waypoint == [0;0;0]
+    static_positions.route = [static_positions.destination];
+else
+    static_positions.route = [static_positions.waypoint,static_positions.destination];
+end
 static_positions.mic_positions = [0 0 30; 600 0 30; 600 600 30; 0 600 30; 300 0 77];
 
 car.did_turn = false;
@@ -82,7 +86,7 @@ t.ExecutionMode = 'fixedRate';
                 if(pass == 1)
                     EPO4figure.setKITT([position(1,end)/100 position(2,end)/100]); %Update car position
                     state = States.Drive;
-                    Orientation
+                    Orientation; %function without nonglobal arguments
                 else
                     state = States.Sample;
                     fail_factor = fail_factor + 1;
