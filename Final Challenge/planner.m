@@ -23,14 +23,15 @@ distance         = sqrt(d_x^2 + d_y^2);
 test_data.dtheta = [test_data.dtheta, car.d_theta]; 
 car.v_factor = 1; %car.voltage / car.voltage; %temporary always 1
 if distance <= 0.3
-    time  = 3; % for 3 seconds
     steer = 150;
     speed = 150; %standing still
     if static_positions.point >= numberofpoints
+       time = 40;
        disp('WE MADE IT');
     else
     static_positions.point = static_positions.point + 1; % keep track of where we're going
     disp('ARRIVED AT A WAYPOINT');
+    time = 3;
     end
 else
     if car.did_turn == true
