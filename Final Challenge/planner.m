@@ -4,6 +4,7 @@ global car;
 global position;
 global test_data;
 global static_positions;
+% compensation for voltage drop of supercaps
 if car.voltage >= 17 % speed compensation for voltage drop
     speed = 158;
     disp('Voltage level: normal, just cruizing');
@@ -14,6 +15,7 @@ else
     speed = 165;
     disp('Voltage level: drained, pedal to the metal!');
 end
+% end of compensation for voltage drop of supercaps
 [~,numberofpoints] = size(static_positions.route);
 d_x              = next_position(1,static_positions.point)-position(1,end);
 d_y              = next_position(2,static_positions.point)-position(2,end);
