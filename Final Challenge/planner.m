@@ -20,18 +20,18 @@ d_y              = next_position(2,static_positions.point)-position(2,end);
 desired_theta    = atan2d(d_y,d_x);
 car.d_theta      = desired_theta - position(3,end);
 distance         = sqrt(d_x^2 + d_y^2);
-test_data.dtheta = [test_data.dtheta, car.d_theta]; 
+test_data.dtheta = [test_data.dtheta, car.d_theta];
 car.v_factor = 1; %car.voltage / car.voltage; %temporary always 1
 if distance <= 0.3
     steer = 150;
     speed = 150; %standing still
     if static_positions.point >= numberofpoints
-       time = 40;
-       disp('WE MADE IT, right? RIGHT?!');
+        time = 40;
+        disp('WE MADE IT, right? RIGHT?!');
     else
-    static_positions.point = static_positions.point + 1; % keep track of where we're going
-    disp('ARRIVED AT A WAYPOINT, on to the next one!');
-    time = 3;
+        static_positions.point = static_positions.point + 1; % keep track of where we're going
+        disp('ARRIVED AT A WAYPOINT, on to the next one!');
+        time = 3;
     end
 else
     if car.did_turn == true

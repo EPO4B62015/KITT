@@ -8,12 +8,13 @@ global test_data
 
 fail_factor = 0;
 drive_counter = 0;
+z_filter_counter = 0;
 
 test_data.pass = 0;
 test_data.TDOA = [0;0;0;0;0;0;0;0;0;0];
 test_data.measured = zeros(1,12000,5);
 test_data.dtheta = 0;
-test_data.cartime = 0;
+test_data.cartime = [0 0 0]; 
 test_data.pos_tdoa = [0;0;0];
 static_positions.origin = [445;15;90]; %start position
 static_positions.destination = [0;500;0];
@@ -27,6 +28,7 @@ end
 static_positions.mic_positions = [0 0 30; 600 0 30; 600 600 30; 0 600 30; 300 0 77];
 
 car.did_turn = false;
+car.did_last_turn = false;
 position = static_positions.origin; %Postion in centimeters
 
 state = States.VoltageMeasure;
@@ -83,7 +85,7 @@ t.ExecutionMode = 'fixedRate';
                 test_data.TDOA = [test_data.TDOA ,TDOA_data];
                 %Localize
                 
-                pass = localize_5ch(TDOA_data, 100, car.d_theta);
+                pass = localize_5ch(TDOA_data, 100 * car.time + 12 * drive_counter, car.d_theta);
                 test_data.pass = [test_data.pass; pass];
                 
                 if(pass == 1)

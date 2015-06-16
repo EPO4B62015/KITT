@@ -7,6 +7,7 @@ function pass = localize_5ch(tdoa_matrix, expected_travel_distance, expected_ang
 %   3 = Rejected because of travel distance
 %   4 = Rejected because of angle
 %   5 = Rejected because z too large
+%   6 = Rejected because of travel distance while turning
 disp('Start localize');
 global position;
 global static_positions;
@@ -47,12 +48,16 @@ end
 y = lscov(A_matrix, b_matrix);
 x = y(1:col);
 test_data.pos_tdoa = [test_data.pos_tdoa, x];
+
 if(abs(x(3)) > 500)%Z filter
     pass = 5;
     return
 end
+if(x(3) > 20 && x(3) < 32)
+    vector = [x(1); x(2); 0];
+    position = [position vector];
+end
 
-if(
 
 if(x(1) < -100 || x(2) < -100 || x(1) > mic_positions(3, 1)+100 || x(2) > mic_positions(3,2)+100)
     pass = 2;
@@ -68,16 +73,24 @@ distance_traveled = norm([diff_y diff_x]);
 
 disp('Check 1')
 if(car.did_turn == true)
-    %if(abs(angle - position(3, end) < 15 + expected_angle_difference))
+    if(distance_traveled < expected_travel_distance * 1.5)
         vector = [x(1); x(2); 0];
         position = [position vector];
-    %else
-    %    disp('Rejected because of angle');
-    %    pass = 4;
-    %end
+    else
+       disp('Rejected because of travel distance');
+       pass = 6;
+    end
     return
-end
-if(distance_traveled < expected_travel_distance * 1.5)
+elseif(car.did_last_turn == true)
+    if(distance_traveled < expected_travel_distance * 1.5)
+        vector = [x(1); x(2); 0];
+        position = [position vector];
+    else
+       disp('Rejected because of travel distance');
+       pass = 7;
+    end
+    return
+elseif(distance_traveled < expected_travel_distance * 1.5)
     if(abs(angle - position(3, end) < 15))
         vector = [x(1); x(2); 0];
         position = [position vector];

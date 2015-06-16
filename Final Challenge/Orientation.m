@@ -5,12 +5,7 @@
 function Orientation%(position)
 %Function to keep track of the orientation of the car
 global position
-global car
 
-if(car.did_turn)
-    position(3, end) = position(3,end - 1) + car.d_theta;
-else
-    
     %Take positive y axis as 0 degree
     
     x_diff = position(1, end) - position(1, end-1);
@@ -19,5 +14,5 @@ else
     angle = atan2d(y_diff,x_diff); % * 180 / pi;
     
     position(3,end) = angle;
-end
+
 end
