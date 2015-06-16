@@ -48,7 +48,7 @@ else
                 steer   = 150;
                 disp('Almost there, careful now, we got one shot (nope, just kidding).');
             else                %distance is greater than 1.5m
-                time    = 1 / car.v_factor;    % return a 1s drive
+                time    = 1.5 / car.v_factor;    % return a 1s drive
                 steer   = 150;  % straight
                 disp('Lets drive in a straight line for a bit and check again later.');
             end

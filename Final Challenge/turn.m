@@ -6,10 +6,10 @@ global car;
 % Moet nog getweaked / gecalibreerd worden
 % positive d_theta
 if d_theta > 5
-    time = (0.01622222222*d_theta +0.5) / car.v_factor;
+    time = (0.01422222222*d_theta +0.5) / car.v_factor;
 elseif d_theta < -5
     % negative d_theta 
-    time = (-0.0162222222*d_theta +0.5) / car.v_factor;
+    time = (-0.0142222222*d_theta +0.5) / car.v_factor;
 else 
     time = 0;
 end
