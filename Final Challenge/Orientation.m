@@ -16,7 +16,7 @@ else
     x_diff = position(1, end) - position(1, end-1);
     y_diff = position(2, end) - position(2, end-1);
     
-    angle = atan2d(y_diff,x_diff) % * 180 / pi;
+    angle = atan2d(y_diff,x_diff); % * 180 / pi;
     
     position(3,end) = angle;
 end

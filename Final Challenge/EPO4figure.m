@@ -73,7 +73,7 @@ classdef EPO4figure
                 plot3(loc(1),loc(2),loc(3),'md','LineWidth',4);
             end
         end
-
+        
         function setDestination(loc)
             %setDestination adds a destination to the figure
             %x,y and z are the x,y,z coordinates given in meters
@@ -86,24 +86,26 @@ classdef EPO4figure
             end
         end
         
-        function setKITT(loc)
+        function setKITT(loc, start)
             %setKITT adds a the current position of KITT to the figure
             %x,y and z are the x,y,z coordinates given in meters
             persistent lastloc
-
+            
             EPO4figure.isLoaded();
             figure(99);
-            if ~isempty(lastloc)
-                plot3(lastloc(1),lastloc(2),lastloc(3)+0.001,'k.','MarkerSize',21);
+            if(start == 0)
+                if ~isempty(lastloc)
+                    plot3(lastloc(1),lastloc(2),lastloc(3)+0.001,'k.','MarkerSize',21);
+                end
             end
-
+            
             if length(loc) == 2
                 loc(3) = 0;
             end
             lastloc = loc;
             plot3(loc(1),loc(2),loc(3),'b.','MarkerSize',21);
         end
-
+        
         function setObstacle(loc)
             %setObstacle adds a obstacle to the figure
             %x,y and z are the x,y,z coordinates given in meters

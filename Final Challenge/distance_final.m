@@ -29,8 +29,6 @@ end
 [peaks_2,locations_2] = findpeaks(h2(start:loc_peak_2_f), 'MinPeakHeight',0.99*peaks_2_f(1));
 %locations_2
 
-
-
 %[peaks_2,locations_2] = findpeaks(h2([loc_peak_1-Ts:loc_peak_1+Ts]), 'SortStr', 'descend', 'NPeaks',5);
 
 %Visualize the found peaks

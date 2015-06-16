@@ -45,9 +45,12 @@ t.ExecutionMode = 'fixedRate';
         EPO4figure; %Load the figure
         EPO4figure.setMicLoc(static_positions.mic_positions/100) %Update Mic Positions
         EPO4figure.setDestination(static_positions.destination/100);
-        EPO4figure.setKITT([position(1,end)/100 position(2,end)/100]); %Update car position
-        %EPO4figure.setWayPoint(static_positions.waypoint/100); %Only add
-        %to map if there is a waypoint
+        EPO4figure.setKITT([position(1,end)/100 position(2,end)/100], 1); %Update car position
+        if static_positions.waypoint == [0;0;0]
+            disp('No waypoint');
+        else
+        EPO4figure.setWayPoint(static_positions.waypoint/100); 
+        end;
     end
 
 
@@ -84,7 +87,7 @@ t.ExecutionMode = 'fixedRate';
                 test_data.pass = [test_data.pass; pass];
                 
                 if(pass == 1)
-                    EPO4figure.setKITT([position(1,end)/100 position(2,end)/100]); %Update car position
+                    EPO4figure.setKITT([position(1,end)/100 position(2,end)/100], 0); %Update car position
                     state = States.Drive;
                     Orientation; %function without nonglobal arguments
                 else
