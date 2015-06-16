@@ -5,7 +5,7 @@ global position;
 global test_data;
 global static_positions;
 if car.voltage >= 17 % speed compensation for voltage drop
-    speed  = 158;
+    speed = 158;
 elseif car.voltage >= 14
     speed = 162;
 else
