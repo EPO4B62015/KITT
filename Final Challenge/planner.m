@@ -27,15 +27,19 @@ car.v_factor = 1; %car.voltage / car.voltage; %temporary always 1
 if distance <= 0.3
     steer = 150;
     speed = 150; %standing still
+    
     if static_positions.point >= numberofpoints
         time = 40;
         disp('WE MADE IT, right? RIGHT?!');
+        car.status = 2;
     else
         static_positions.point = static_positions.point + 1; % keep track of where we're going
         disp('ARRIVED AT A WAYPOINT, on to the next one!');
         time = 3;
+        car.status = 1;
     end
 else
+    car.status = 0;
     if car.did_turn == true
         time         = 0.5 / car.v_factor;
         steer        = 150;
