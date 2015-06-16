@@ -38,8 +38,10 @@ else
         time         = 0.5 / car.v_factor;
         steer        = 150;
         car.did_turn = false;
+        car.did_last_turn = true;
         disp('Driving straight a bit to provide data for orientation after we made a turn.');
     else
+        car.did_last_turn = false;
         disp('To turn or not to turn, thats the question...');
         if abs(car.d_theta) <= 10    %straigth
             disp('No turn!');
