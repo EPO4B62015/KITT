@@ -82,7 +82,7 @@ t.ExecutionMode = 'fixedRate';
                 if(pass == 1)
                     EPO4figure.setKITT([position(1,end)/100 position(2,end)/100]); %Update car position
                     state = States.Drive;
-                    Orientation
+                    Orientation; %function without nonglobal arguments
                 else
                     state = States.Sample;
                     fail_factor = fail_factor + 1;
