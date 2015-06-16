@@ -15,8 +15,8 @@ test_data.measured = zeros(1,12000,5);
 test_data.dtheta = 0;
 test_data.cartime = 0;
 test_data.pos_tdoa = [0;0;0];
-static_positions.origin = [112;8;90]; %start position
-static_positions.destination = [500;50;0];
+static_positions.origin = [445;15;90]; %start position
+static_positions.destination = [0;500;0];
 static_positions.waypoint = [0;0;0];
 static_positions.point = 1; % need this in planner 
 if static_positions.waypoint == [0;0;0]
