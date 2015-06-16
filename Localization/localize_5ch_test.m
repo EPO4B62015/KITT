@@ -3,7 +3,7 @@ function x = localize_5ch(tdoa_matrix)
 global position;
 global static_positions;
 global test_data;
-mic_positions = [0 0 30; 413 0 30; 413 210 30; 0 210 30; 173 0 77];;
+mic_positions = [0 0 30; 600 0 30; 600 600 30; 0 600 30; 300 0 77];
 row = 5;
 col = 3;
 elements = (row * (row - 1))/2;
@@ -38,7 +38,7 @@ end
 
 y = lscov(A_matrix, b_matrix);
 
-x = y(1:col)
+x = y(1:col);
 test_data.pos_tdoa = [test_data.pos_tdoa x];
 % if(x(1) < 0 || x(2) < 0 || x(1) > mic_positions(3, 1) || x(2) > mic_positions(3,2))
 %     pass = 0;

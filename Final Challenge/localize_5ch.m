@@ -20,11 +20,11 @@ if(elements ~= length(tdoa_matrix))
     error('X matrix and TDOA matrix dont match!');
 end
 
-if(length(find(abs(tdoa_matrix) < 5)) > 1.5)
-    disp('Multiple elements are smaller than 5. Can not compute!')
-    pass = 0;
-    return;
-end
+% if(length(find(abs(tdoa_matrix) < 5)) > 1.5)
+%     disp('Multiple elements are smaller than 5. Can not compute!')
+%     pass = 0;
+%     return;
+% end
 
 A_matrix = zeros(elements, col + row - 1);
 b_matrix = zeros(elements, 1);
@@ -42,7 +42,8 @@ for i = 1:elements
         mic2 = mic1 + 1;
     end
 end
-y = pinv(A_matrix) * b_matrix;
+%y = pinv(A_matrix) * b_matrix;
+y = lscov(A_matrix, b_matrix);
 x = y(1:col)
 test_data.pos_tdoa = [test_data.pos_tdoa, x];
 if(x(1) < 0 || x(2) < 0 || x(1) > mic_positions(3, 1) || x(2) > mic_positions(3,2))
