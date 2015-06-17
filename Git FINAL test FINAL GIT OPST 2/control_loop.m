@@ -137,14 +137,12 @@ t.ExecutionMode = 'fixedRate';
                                     disp('Case 3');
                                     drive_counter = 100;
                                 case 4
-                                    disp('Case 4');
-                                    %car.did_turn = true;
-                                    pass = localize_5ch(TDOA_data, 1000);
-                                    test_data.pass = [test_data.pass; pass];
-                                    %This will reevaluate its
-                                    %orientation and position
-                                    if(pass ~= 1)
-                                        error('Could not reevaluate position. Something funny is going on.');
+                                    drive_counter = drive_counter + 1;
+                                    drive_car(car.speed, car.steer_straight, 0.2);
+                                    if(drive_counter > 10)
+                                        car.did_last_turn = true;
+                                        localize_5ch(TDOA_data, 1000);
+                                        car.did_last_turn = false;
                                     end
                                 case 5
                                     disp('Case 5');
