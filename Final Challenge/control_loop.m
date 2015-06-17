@@ -57,6 +57,7 @@ t.ExecutionMode = 'fixedRate';
         else
             EPO4figure.setWayPoint(static_positions.waypoint/100);
         end;
+        EPOCommunications('transmit','A0');
     end
 
 
@@ -84,7 +85,8 @@ t.ExecutionMode = 'fixedRate';
                     %Car is at destination
                     play(player)
                     disp('At destination!')
-                    
+                    EPOCommunications('transmit','A1');
+                    stop(timerObj);
                 end
                 
                 drive_car(car.speed, car.steer, car.time);
