@@ -8,7 +8,7 @@ global test_data
 
 fail_factor = 0;
 drive_counter = 0;
-z_counter = 0;
+middle_counter = 0;
 
 test_data.pass = 0;
 test_data.TDOA = [0;0;0;0;0;0;0;0;0;0];
@@ -100,8 +100,12 @@ t.ExecutionMode = 'fixedRate';
                 disp('TDOA afgerond');
                 test_data.TDOA = [test_data.TDOA ,TDOA_data];
                 %Localize
-                pass = localize_5ch(TDOA_data, (100 * car.time) + (12 * drive_counter));
+                
+                pass = localize_5ch(TDOA_data, ((100/1.3) * car.time) + (15 * drive_counter) + (100 * middle_counter);
                 %pass = 1;
+                if(pass ~= 8)
+                    middle_counter = 0;
+                end
                 test_data.pass = [test_data.pass; pass];
                 
                 if(pass == 1)
@@ -110,12 +114,18 @@ t.ExecutionMode = 'fixedRate';
                     Orientation; %function without nonglobal arguments
                 else
                     state = States.Sample;
+                    
                     fail_factor = fail_factor + 1;
+                    if(pass == 8)
+                        %Too close to middle, drive straight.\
+                        fail_factor = 0;
+                        middle_counter = middle_counter + 1;
+                        drive_car(car.speed, car.steer_straight, 1.3);
+                    end
                     if(fail_factor >= 3)
-                        drive_counter = drive_counter + 1;
+                        
                         fail_factor = 0;
                         if(drive_counter >= 3)
-                            
                             switch(pass)
                                 case 2
                                     disp('Case 2');
@@ -128,8 +138,9 @@ t.ExecutionMode = 'fixedRate';
                                     drive_counter = 100;
                                 case 4
                                     disp('Case 4');
-                                    car.did_turn = true;
+                                    %car.did_turn = true;
                                     pass = localize_5ch(TDOA_data, 1000);
+                                    test_data.pass = [test_data.pass; pass];
                                     %This will reevaluate its
                                     %orientation and position
                                     if(pass ~= 1)
@@ -137,10 +148,7 @@ t.ExecutionMode = 'fixedRate';
                                     end
                                 case 5
                                     disp('Case 5');
-                                    z_counter = z_counter + 1;
-                                    if(z_counter > 3)
-                                        %error('Z_counter is too large. Something funny is going on.');
-                                    end
+                                    
                                 case 6
                                     disp('Case 6');
                                     localize_5ch(TDOA_data, 1000);
@@ -151,8 +159,11 @@ t.ExecutionMode = 'fixedRate';
                                     localize_5ch(TDOA_data, 1000);
                                     state = States.Drive;
                                     Orientation; %function without nonglobal arguments
+                                
+                                    
                             end
                         else
+                            drive_counter = drive_counter + 1;
                             drive_car(car.speed, car.steer_straight, 0.2);
                         end
                     end

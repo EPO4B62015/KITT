@@ -71,7 +71,13 @@ diff_x = x(1) - position(1,end);
 diff_y = x(2) - position(2,end);
 angle = atan2d(diff_y, diff_x);
 distance_traveled = norm([diff_y diff_x]);
+distance_to_middle = norm([(x(1) - 300) (x(2) - 300)]);
+
 %Angle calculated. What to reject and what to do when rejected?
+if(distance_to_middle < 100)
+    disp('Rejected because too close to middle');
+    pass = 8
+end
 
 disp('Check 2')
 if(car.did_turn == true)
