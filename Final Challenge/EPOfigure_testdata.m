@@ -1,7 +1,7 @@
 %Create EPOFIGURE from testdata
 close all;
-%load testdata
-load test2.mat
+%load testdata%
+load Test1.mat
 post_test = test_data.pos_tdoa;
 i = 1;
 EPO4figure; %Load the figure
@@ -13,7 +13,6 @@ EPO4figure.setKITT(static_positions.origin(1:2,1)/100, 1);
 
 
 for i = 1:m
-    
     EPO4figure.setKITT([post_test(1,i)/100 post_test(2,i)/100], 0); %Update car position
-    pause(0.2);
+    pause(0.15);
 end
