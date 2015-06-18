@@ -6,7 +6,7 @@ global test_data;
 global static_positions;
 % compensation for voltage drop of supercaps
 if car.voltage >= 17 % speed compensation for voltage drop
-    speed = 163; % IMPORTANT, CALIBRATE FOR 1.3s for 1m
+    speed = 158; % IMPORTANT, CALIBRATE FOR 1.3s for 1m
     disp('Voltage level: normal, just cruizing')
 elseif car.voltage >= 14 % adjust by hand acordingly
     speed = 162;
