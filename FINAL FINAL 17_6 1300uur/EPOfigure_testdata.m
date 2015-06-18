@@ -2,7 +2,7 @@
 close all;
 %load testdata
 %load Test3.mat
-post_test = test_data.pos_tdoa;
+post_test = position;
 i = 1;
 EPO4figure; %Load the figure
 EPO4figure.setMicLoc(static_positions.mic_positions/100) %Update Mic Positions
