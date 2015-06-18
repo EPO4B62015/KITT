@@ -24,7 +24,7 @@ function x = localize(x_matrix, tdoa_matrix)
     end
     
     %EEN VAN DEZE WEGCOMMENTEN
-    %y = pinv(A_matrix) * b_matrix;
-    y = lscov(A_matrix, b_matrix);
+    y = pinv(A_matrix) * b_matrix;
+    %y = lscov(A_matrix, b_matrix);
     x = y(1:col);
 end
