@@ -6,9 +6,9 @@ global test_data;
 global static_positions;
 % compensation for voltage drop of supercaps
 if car.voltage >= 17 % speed compensation for voltage drop
-    speed = 163;
+    speed = 163; % IMPORTANT, CALIBRATE FOR 1.3s for 1m
     disp('Voltage level: normal, just cruizing')
-elseif car.voltage >= 14
+elseif car.voltage >= 14 % adjust by hand acordingly
     speed = 162;
     disp('Voltage level: meh, lets hit the gas')
 else
@@ -41,7 +41,7 @@ if distance <= 0.3
 else
     car.status = 0;
     if car.did_turn == true
-        time         = 1 / car.v_factor;
+        time         = 0.6 / car.v_factor;
         steer        = car.steer_straight;
         car.did_turn = false;
         car.did_last_turn = true;
@@ -56,7 +56,7 @@ else
                 steer   = car.steer_straight;
                 disp('Almost there, careful now, we got one shot (nope, just kidding).')
             else                %distance is greater than 1.5m
-                time    = 2 / car.v_factor;    % return a 1s drive
+                time    = 1 / car.v_factor;    % return a 1s drive
                 steer   = car.steer_straight;  % straight
                 disp('Lets drive in a straight line for a bit and check again later.')
             end
