@@ -35,7 +35,7 @@ if distance <= 0.3
     else
         static_positions.point = static_positions.point + 1; % keep track of where we're going
         disp('ARRIVED AT A WAYPOINT, on to the next one!')
-        time = 3;
+        time = 6;
         car.status = 1;
     end
 else

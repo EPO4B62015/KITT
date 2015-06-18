@@ -81,6 +81,7 @@ t.ExecutionMode = 'fixedRate';
                 if(car.status == 1)
                     %Car is at waypoint
                     play(player)
+                    disp('WAYPOINT')
                 elseif(car.status == 2)
                     %Car is at destination
                     play(player)
