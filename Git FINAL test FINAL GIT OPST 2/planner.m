@@ -65,11 +65,21 @@ else
             %car.d_theta    = roundn(car.d_theta,1.5); % round up or down to nearest 15 degrees.
             car.did_turn    = true; % make sure that we drive a bit in a straight line next
             if car.d_theta <= 0
-                steer = 100;
-                disp('to the right!')
+                if d_x <= 0 
+                    steer = 200;
+                    disp('to the left!')
+                else
+                    steer = 100;
+                    disp('to the right!')
+                end
             else
-                steer = 200;
-                disp('to the left!')
+                if d_x <= 0
+                    steer = 100;
+                    disp('to the right')
+                else
+                    steer = 200;
+                    disp('to the left!')
+                end    
             end
             time = turn(car.d_theta);
         end
