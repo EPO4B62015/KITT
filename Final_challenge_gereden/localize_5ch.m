@@ -77,6 +77,7 @@ distance_to_middle = norm([(x(1) - 300) (x(2) - 300)]);
 if(distance_to_middle < 100)
     disp('Rejected because too close to middle');
     pass = 8
+    return;
 end
 
 disp('Check 2')
@@ -90,7 +91,7 @@ if(car.did_turn == true)
     end
     return
 elseif(car.did_last_turn == true)
-    if(distance_traveled < expected_travel_distance * 1.5)
+    if(distance_traveled < expected_travel_distance * 2)
         vector = [x(1); x(2); 0];
         position = [position vector];
     else
