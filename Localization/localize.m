@@ -22,6 +22,9 @@ function x = localize(x_matrix, tdoa_matrix)
             mic2 = mic1 + 1;
         end
     end
-    y = pinv(A_matrix) * b_matrix;
+    
+    %EEN VAN DEZE WEGCOMMENTEN
+    %y = pinv(A_matrix) * b_matrix;
+    y = lscov(A_matrix, b_matrix);
     x = y(1:col);
 end
