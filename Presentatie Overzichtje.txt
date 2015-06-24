@@ -1,24 +1,24 @@
-Taakverdeling
+Taakverdeling --> Martijn
 
-Channel Estimates 
+Channel Estimates --> Martijn
 	- Referentie
 	- Frequency Equalization
 	- 0.1 Max(abs(X))
-Piekdetectie
+Piekdetectie --> Richard
 	- Piek 1 als eerste, rest referentie
 	- Reflecties, daarvoor kijken binnen bepaald percentage
-TDOA --> aan de hand van de gevonden pieken.
+TDOA --> aan de hand van de gevonden pieken. --> Richard
 
-Localize
+Localize --> Jeroen
 	- Algoritme (kort) toelichten
 	- Verficatie positie
 	- ?? verder... 
 
-Planner
+Planner --> Thomas
 	- Stukje rechtdoor rijden voor hoekbepaling
 	- ?? verder...
 
-Control Loop
+Control Loop --> Jeroen
 	- Timer Functie
 	- Main Functie
 
