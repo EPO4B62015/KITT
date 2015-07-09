@@ -1,0 +1,28 @@
+Taakverdeling --> Martijn
+
+Channel Estimates --> Martijn
+	- Referentie
+	- Frequency Equalization
+	- 0.1 Max(abs(X))
+Piekdetectie --> Richard
+	- Piek 1 als eerste, rest referentie
+	- Reflecties, daarvoor kijken binnen bepaald percentage
+TDOA --> aan de hand van de gevonden pieken. --> Richard
+
+Localize --> Jeroen
+	- Algoritme (kort) toelichten
+	- Verficatie positie
+	- ?? verder... 
+
+Planner --> Thomas
+	- Stukje rechtdoor rijden voor hoekbepaling
+	- ?? verder...
+
+Control Loop --> Jeroen
+	- Timer Functie
+	- Main Functie
+
+Final Challenge --> Thomas.
+	- Kort toelichten wat er fout ging hoe het kwam en hoe het verbeterd is/verkomen kon worden.
+
+
